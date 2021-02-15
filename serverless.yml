@@ -1,0 +1,56 @@
+org: lucasbrogni
+app: prospects-api
+service: prospects-api
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  environment:
+    NODE_ENV: dev
+    PROSPECT_COLLECTION: prospects
+    DB_NAME: prospects
+    DB_URL: mongodb+srv://prospects:any@lucasbrogni.zch9p.mongodb.net
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-offline
+
+package:
+  exclude:
+    - config/.env.stg
+    - config/.env.pro
+  include:
+    - config/.env.dev
+
+functions:
+  create:
+    handler: app/handler.create
+    events:
+      - http:
+          path: prospects
+          method: post
+  update:
+    handler: app/handler.update
+    events:
+      - http:
+          path: prospects/{id}
+          method: put
+  find:
+    handler: app/handler.find
+    events:
+      - http:
+          path: prospects
+          method: get
+  findOne:
+    handler: app/handler.findOne
+    events:
+      - http:
+          path: prospects/{id}
+          method: get
+
+  deleteOne:
+    handler: app/handler.deleteOne
+    events:
+      - http:
+          path: prospects/{id}
+          method: delete
