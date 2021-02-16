@@ -7,9 +7,6 @@ provider:
   runtime: nodejs12.x
   environment:
     NODE_ENV: dev
-    PROSPECT_COLLECTION: prospects
-    DB_NAME: prospects
-    DB_URL: mongodb+srv://prospects:any@lucasbrogni.zch9p.mongodb.net
 
 plugins:
   - serverless-plugin-typescript
