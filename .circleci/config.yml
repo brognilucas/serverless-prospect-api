@@ -3,7 +3,7 @@ jobs:
     working_directory: ~/prospects-api
 
     docker:
-      - image: circleci/node:6.10
+      - image: circleci/node:latest
     steps:
       - checkout
       # Download and cache dependencies
