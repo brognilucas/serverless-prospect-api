@@ -1,7 +1,7 @@
 jobs:
   build:
-    docker:
-      — image: circleci/node
+    machine:
+      - image: ubuntu-2004:202010-01
     steps:
       - checkout
 
