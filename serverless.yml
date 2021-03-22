@@ -16,6 +16,9 @@ package:
   exclude:
     - config/.env.stg
     - config/.env.pro
+    - coverage/**
+    - .circleci/**
+
   include:
     - config/.env.dev
 
