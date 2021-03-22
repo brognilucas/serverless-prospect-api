@@ -1,6 +1,6 @@
 import { Position } from "./PositionsEnum";
 
-export class CreateProspectDTO {
+export class ProspectDTO {
   name: string;
   id: string;
   description?: string;

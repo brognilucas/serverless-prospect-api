@@ -1,5 +1,5 @@
 import { Model } from "mongoose";
-import { CreateProspectDTO } from "../model/dto/createProspectDTO";
+import { ProspectDTO } from "../model/dto/ProspectDTO";
 
 export class ProspectService {
   private prospects: Model<any>;
@@ -7,7 +7,7 @@ export class ProspectService {
     this.prospects = prospects;
   }
 
-  protected async createProspect(body: CreateProspectDTO): Promise<object> {
+  protected async createProspect(body: ProspectDTO): Promise<object> {
     try {
       const result = await this.prospects.create(body);
 

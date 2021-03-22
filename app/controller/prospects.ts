@@ -1,7 +1,7 @@
 import { Model } from "mongoose";
 import { MessageUtil } from "../utils/message";
 import { ProspectService } from "../service/prospect";
-import { CreateProspectDTO } from "../model/dto/createProspectDTO";
+import { ProspectDTO } from "../model/dto/ProspectDTO";
 import { v4 as uuid } from "uuid";
 import { Position } from "../model/dto/PositionsEnum";
 
@@ -12,7 +12,7 @@ export class ProspectController extends ProspectService {
 
   async create(event: any) {
     try {
-      const prospect: CreateProspectDTO = JSON.parse(event.body);
+      const prospect: ProspectDTO = JSON.parse(event.body);
 
       if (!prospect.name || !prospect.college) {
         return MessageUtil.error(400, "Must have a name and a college.");
