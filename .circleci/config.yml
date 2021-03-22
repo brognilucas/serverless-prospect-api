@@ -1,4 +1,7 @@
 jobs:
+  docker:
+      — image: circleci/node:14.16.0
+
   build:
     steps:
       - checkout
