@@ -7,11 +7,6 @@ jobs:
     steps:
       - checkout
       
-      - run:
-          name: Update node to v14.16.0
-          shell: /bin/sh
-          command: nvm install v14.16.0
-
       # Download and cache dependencies
       - restore_cache:
           keys:
@@ -23,6 +18,7 @@ jobs:
           name: Install Serverless CLI and dependencies
           command: |
             sudo npm i -g serverless
+            sudo npm i -g typescript
             npm install
 
       - run:
