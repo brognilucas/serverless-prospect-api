@@ -22,10 +22,6 @@ jobs:
             npm install
 
       - run:
-          name: Run tests with code coverage
-          command: npm test --coverage
-
-      - run:
           name: Deploy application
           command: sls deploy
 
