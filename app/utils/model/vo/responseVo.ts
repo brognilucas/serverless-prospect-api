@@ -4,7 +4,7 @@ export class ResponseBodyVO {
   data?: object;
 }
 
-export class ResponseVO {
+export interface ResponseVO {
   statusCode: number;
   body: string;
 }

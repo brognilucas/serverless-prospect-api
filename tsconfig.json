@@ -9,7 +9,9 @@
     "noUnusedParameters": true,
     "outDir": "lib",
     "sourceMap": true,
-    "target": "esnext"
+    "target": "esnext",
+    "baseUrl": "./",
+    "typeRoots": ["node_modules/@types"],
   },
   "exclude": ["node_modules"]
 }
