@@ -1,4 +1,4 @@
-import { ResponseVO } from './model/vo/ResponseVo';
+import { ResponseVO } from 'app/utils/model/vo/responseVo';
 
 enum StatusCode {
   success = 200,
