@@ -1,4 +1,4 @@
-import { Model, Mongoose } from "mongoose";
+import { Model } from "mongoose";
 import { ProspectDTO } from "../model/dto/ProspectDTO";
 
 export class ProspectService {
