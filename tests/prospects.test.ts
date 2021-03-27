@@ -3,14 +3,16 @@ import { expect } from "chai";
 import { findOne, find, create, update, deleteOne } from "../app/handler";
 import * as prospectsMock from "./prospects.mock";
 import { prospect as ProspectModel } from "../app/model/prospects";
-import sinon from "sinon";
+const sinon = require('sinon'); 
+require('sinon-mongoose');
+
 
 describe("FindOne [GET]", () => {
   it("success", () => {
     try {
-      const s = sinon.mock(ProspectModel);
+      const s = sinon.mock(ProspectModel)
 
-      s.expects("findOne").atLeast(1).atMost(3).resolves(prospectsMock.findOne);
+      s.expects("findOne").chain('exec').atLeast(1).atMost(3).resolves(prospectsMock.findOne);
 
       return lambdaTester(findOne)
         .event({ pathParameters: { id: prospectsMock.findOne.id } })
@@ -31,7 +33,7 @@ describe("Find [GET]", () => {
   it("success", () => {
     const s = sinon.mock(ProspectModel);
 
-    s.expects("find").resolves(prospectsMock.find);
+    s.expects("find").chain('exec').resolves(prospectsMock.find)
 
     return lambdaTester(find)
       .event({})
@@ -46,9 +48,9 @@ describe("Find [GET]", () => {
 
 describe("Create [POST]", () => {
   it("success", () => {
-    const s = sinon.mock(ProspectModel);
+    const s = sinon.mock(ProspectModel)
 
-    s.expects("create").resolves(prospectsMock.create);
+    s.expects("create").chain('exec').resolves(prospectsMock.create);
 
     return lambdaTester(create)
       .event({
@@ -69,7 +71,7 @@ describe("Update [PUT]", () => {
   it("success", () => {
     const s = sinon.mock(ProspectModel);
 
-    s.expects("findOneAndUpdate").resolves(prospectsMock.update);
+    s.expects("findOneAndUpdate").chain('exec').resolves(prospectsMock.update);
 
     return lambdaTester(update)
       .event({
@@ -91,7 +93,7 @@ describe("DeleteOne [Delete]", () => {
   it("success", () => {
     const s = sinon.mock(ProspectModel);
 
-    s.expects("deleteOne").resolves(prospectsMock.deleteOne);
+    s.expects("deleteOne").chain('exec').resolves(prospectsMock.deleteOne);
 
     return lambdaTester(deleteOne)
       .event({ pathParameters: { id: prospectsMock.findOne.id } })
@@ -106,12 +108,12 @@ describe("DeleteOne [Delete]", () => {
   it("deletedCount === 0", () => {
     const s = sinon.mock(ProspectModel);
 
-    s.expects("deleteOne").resolves(prospectsMock.deletedCount);
+    s.expects("deleteOne").chain('exec').resolves(prospectsMock.deletedCount);
 
     return lambdaTester(deleteOne)
       .event({ pathParameters: { id: "some aleatory string" } })
       .expectResult((result: any) => {
-        expect(result.statusCode).to.equal(200);
+        expect(result.statusCode).to.equal(404);
         const body = JSON.parse(result.body);
         expect(body.code).to.equal(404);
         s.restore();

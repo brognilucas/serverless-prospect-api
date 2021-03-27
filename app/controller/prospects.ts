@@ -80,7 +80,7 @@ export class ProspectController extends ProspectService {
     try {
       const result = await this.deleteById(id);
 
-      if (!result || !result.removeCount)  {
+      if (!result || !result.deletedCount)  {
         return MessageUtil.error(404, "Prospect not found!");
       }
 

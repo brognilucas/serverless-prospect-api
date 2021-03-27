@@ -24,7 +24,7 @@ export class ProspectService {
   }
 
   protected deleteById(id: string): Promise<any> {
-    return this.prospects.deleteOne({ id }).exec();
+    return this.prospects.deleteOne({ id }).exec()
   }
 
   protected disable(id): Promise<ProspectDTO> {
