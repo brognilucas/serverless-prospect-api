@@ -54,3 +54,17 @@ functions:
       - http:
           path: prospects/{id}
           method: delete
+
+  disable: 
+    handler: app/handler.disable
+    events:
+      - http:
+          path: prospects/{id}/disable
+          method: put
+  
+  enable: 
+    handler: app/handler.enable
+    events:
+      - http:
+          path: prospects/{id}/enable
+          method: put

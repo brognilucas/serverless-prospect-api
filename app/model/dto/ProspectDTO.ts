@@ -9,4 +9,5 @@ export class ProspectDTO {
   college: string; 
   size?: string; 
   weight?: string; 
+  draftYear: number;
 }

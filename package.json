@@ -49,7 +49,7 @@
     "MongoDB Atlas",
     "AWS Lambda"
   ],
-  "author": "May",
+  "author": "Lucas Brogni",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Q-Angelo/aws-node-typescript-rest-api/issues"

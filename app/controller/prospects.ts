@@ -80,7 +80,42 @@ export class ProspectController extends ProspectService {
     try {
       const result = await this.deleteById(id);
 
-      if (!result || result.deletedCount === 0) {
+      if (!result || !result.removeCount)  {
+        return MessageUtil.error(404, "Prospect not found!");
+      }
+
+      return MessageUtil.success(result);
+    } catch (err) {
+      console.error(err);
+
+      return MessageUtil.error(err.code, err.message);
+    }
+  }
+
+  async disableProspect(event){
+    const { id } = event.pathParameters;
+    try {
+      const result = await this.disable(id);
+
+      if (!result) {
+        return MessageUtil.error(404, "Prospect not found!");
+      }
+
+      return MessageUtil.success(result);
+    } catch (err) {
+      console.error(err);
+
+      return MessageUtil.error(err.code, err.message);
+    }
+  }
+
+
+  async enableProspect(event){
+    const { id } = event.pathParameters;
+    try {
+      const result = await this.enable(id);
+
+      if (!result) {
         return MessageUtil.error(404, "Prospect not found!");
       }
 

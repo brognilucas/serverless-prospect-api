@@ -1,11 +1,11 @@
-interface GeneralOffensiveStats {
+class GeneralOffensiveStats {
   yards: number;
   average: number;
   longest: number;
   touchdowns: number;
 }
 
-export interface OffensiveStatsDTO {
+export class OffensiveStatsDTO {
   year: number;
   passing?: PassingStats;
   rushing?: RushingStats;
@@ -13,7 +13,7 @@ export interface OffensiveStatsDTO {
 }
 
 
-interface PassingStats extends GeneralOffensiveStats {
+class PassingStats extends GeneralOffensiveStats {
   attempts: number;
   completions: number;
   interceptions: number;
@@ -21,11 +21,11 @@ interface PassingStats extends GeneralOffensiveStats {
 }
 
 
-interface RushingStats extends GeneralOffensiveStats {
+class RushingStats extends GeneralOffensiveStats {
   attemps: number;
 }
 
-interface ReceivingStats extends GeneralOffensiveStats {
+class ReceivingStats extends GeneralOffensiveStats {
   targets: number;
   receptions: number;
 }

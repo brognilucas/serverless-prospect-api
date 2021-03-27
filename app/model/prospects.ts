@@ -22,6 +22,7 @@ const prospectSchema = new mongoose.Schema({
   college: String,
   size: String,
   weight: String,
+  active: Boolean,
   createdAt: { type: Date, default: Date.now },
 });
 

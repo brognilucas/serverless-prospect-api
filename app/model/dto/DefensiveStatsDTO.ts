@@ -1,6 +1,6 @@
 
 
-export interface DefensiveStatsDTO {
+export class DefensiveStatsDTO {
   year: number;
   sacks: number;
   tackles: number;

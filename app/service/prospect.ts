@@ -1,4 +1,4 @@
-import { Model } from "mongoose";
+import { Model, Mongoose } from "mongoose";
 import { ProspectDTO } from "../model/dto/ProspectDTO";
 
 export class ProspectService {
@@ -7,31 +7,33 @@ export class ProspectService {
     this.prospects = prospects;
   }
 
-  protected async createProspect(body: ProspectDTO): Promise<object> {
-    try {
-      const result = await this.prospects.create(body);
-
-      return result;
-    } catch (err) {
-      console.error(err);
-
-      throw err;
-    }
+  protected async createProspect(body: ProspectDTO): Promise<ProspectDTO> {
+    return this.prospects.create(body);
   }
 
-  protected updateById(id: string, data: object) {
-    return this.prospects.findOneAndUpdate({ id }, { $set: data }, { new: true });
+  protected updateById(id: string, data: object): Promise<ProspectDTO> {
+    return this.prospects.findOneAndUpdate({ id }, { $set: data }, { new: true }).exec();
   }
 
-  protected findProspects() {
-    return this.prospects.find();
+  protected findProspects(): Promise<ProspectDTO[]> {
+    return this.prospects.find({}).exec();
   }
 
-  protected findById(id: string) {
-    return this.prospects.findOne({ id });
+  protected findById(id: string): Promise<ProspectDTO> {
+    return this.prospects.findOne({ id }).exec();
   }
 
-  protected deleteById(id: string) {
-    return this.prospects.deleteOne({ id });
+  protected deleteById(id: string): Promise<any> {
+    return this.prospects.deleteOne({ id }).exec();
   }
+
+  protected disable(id): Promise<ProspectDTO> {
+    return this.prospects.findOneAndUpdate({ id }, { $set: { active: false } }).exec();
+  }
+
+  protected enable(id): Promise<ProspectDTO> {
+    return this.prospects.findOneAndUpdate({ id }, { $set: { active: true } }).exec();
+
+  }
+
 }
