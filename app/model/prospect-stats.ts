@@ -5,8 +5,10 @@ export type ProspectStatsDocument = mongoose.Document & ProspectStats
 
 const prospectStatsSchema = new mongoose.Schema({
     id: { type: String, index: true, unique: true },
+    year: {type: Number, required: true },
+    type: {type: String },
     prospect: { type: String , ref: 'Prospect' },
-    stats: { type: Array },
+    stats: { type: Object },
     createdAt: { type: Date, default: Date.now },
 });
 

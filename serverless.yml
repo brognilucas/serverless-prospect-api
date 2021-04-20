@@ -68,3 +68,10 @@ functions:
       - http:
           path: prospects/{id}/enable
           method: put
+
+  createStatsProspects: 
+    handler: app/handler.createStats
+    events:
+      - http:
+          path: prospects/{id}/stats
+          method: post

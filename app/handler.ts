@@ -1,6 +1,7 @@
 import { Handler } from "aws-lambda";
 import dotenv from "dotenv";
 import path from "path";
+
 const dotenvPath = path.join(
   __dirname,
   "../",
@@ -10,9 +11,12 @@ dotenv.config({
   path: dotenvPath,
 });
 
-import { prospect } from "./model";
+import { prospect, prospectStats as prospectStatsModel } from "./model";
 import { ProspectController } from "./controller/prospects";
+import { ProspectStatsController } from './controller/ProspectStats'
+
 const prospectController = new ProspectController(prospect);
+const prospectStats = new ProspectStatsController(prospectStatsModel);
 
 export const create: Handler = (event: any) => prospectController.create(event);
 
@@ -27,5 +31,7 @@ export const deleteOne: Handler = (event: any) => prospectController.deleteOne(e
 export const enable: Handler = (event: any) => prospectController.enableProspect(event);
 
 export const disable: Handler = (event: any) => prospectController.disableProspect(event);
+
+export const createStats: Handler = (event: any) => prospectStats.create(event)
 
 

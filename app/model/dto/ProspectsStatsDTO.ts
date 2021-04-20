@@ -1,8 +1,10 @@
 import { ProspectDTO } from "./ProspectDTO";
 import { DefensiveStatsDTO } from "./DefensiveStatsDTO";
-import { OffensiveStatsDTO } from "./OffensiveStatsDTO";
+import { PassingStats, ReceivingStats, RushingStats } from "./OffensiveStatsDTO";
 
 export class ProspectStats {
   prospect: ProspectDTO['id'];
-  stats: OffensiveStatsDTO[] | DefensiveStatsDTO[];
+  year: number;
+  type: 'rushing' | 'passing' | 'receiving' | 'defensive';
+  stats: PassingStats | ReceivingStats | RushingStats | DefensiveStatsDTO;
 }

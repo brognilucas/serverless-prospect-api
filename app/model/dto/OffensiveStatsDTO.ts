@@ -6,14 +6,13 @@ class GeneralOffensiveStats {
 }
 
 export class OffensiveStatsDTO {
-  year: number;
   passing?: PassingStats;
   rushing?: RushingStats;
   receiving?: ReceivingStats;
 }
 
 
-class PassingStats extends GeneralOffensiveStats {
+export class PassingStats extends GeneralOffensiveStats {
   attempts: number;
   completions: number;
   interceptions: number;
@@ -21,11 +20,11 @@ class PassingStats extends GeneralOffensiveStats {
 }
 
 
-class RushingStats extends GeneralOffensiveStats {
+export class RushingStats extends GeneralOffensiveStats {
   attemps: number;
 }
 
-class ReceivingStats extends GeneralOffensiveStats {
+export class ReceivingStats extends GeneralOffensiveStats {
   targets: number;
   receptions: number;
 }

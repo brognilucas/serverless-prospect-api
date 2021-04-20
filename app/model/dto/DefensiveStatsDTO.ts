@@ -1,7 +1,6 @@
 
 
 export class DefensiveStatsDTO {
-  year: number;
   sacks: number;
   tackles: number;
   tacklesForLoss: number;
