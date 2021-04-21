@@ -37,13 +37,14 @@ export class ProspectStatsController extends ProspectStatsService {
       if (prevStats){
         throw `Prospect already has stats for ${prospectStats.year}`
       }
-
-      const isOffensive = ['QB', 'WR', 'RB', 'TE'].some((position) => prospect.position === position);
-
+      
       if (!prospectStats.stats || !prospectStats.stats) throw 'Missing stats';
 
+      const isOffensive = [ 'passing', 'rushing', 'receiving'].includes(prospectStats.type)
+
       const isMissingOffensiveStats = ['yards', 'average', 'longest' , 'touchdowns'].every((key) => !Boolean(prospectStats.stats[key]))
-     
+      const isMissingDefensiveStats = ['tackles', 'interceptions', 'sacks', 'forcedFumbles'].every((key) => !Boolean(prospectStats.stats[key]))
+      
       if (
         isOffensive && 
         isMissingOffensiveStats
@@ -51,17 +52,17 @@ export class ProspectStatsController extends ProspectStatsService {
         throw 'Offensive stats must have yards, average, longest and touchdowns'
       }
 
+      if (!isOffensive && isMissingDefensiveStats){
+        throw 'Defensive stats must have tackles, interceptions, sacks and fumbles'
+
+      }
+
       const response = await this.setStats(prospectStats);
 
       return MessageUtil.success(response);
     } catch (err) {
-      console.error(err);
-
       return MessageUtil.error(err.code || 400, err.message || err);
     }
   }
-
-
-
 
 }
