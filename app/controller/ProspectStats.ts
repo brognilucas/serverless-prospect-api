@@ -42,8 +42,10 @@ export class ProspectStatsController extends ProspectStatsService {
 
       const isOffensive = [ 'passing', 'rushing', 'receiving'].includes(prospectStats.type)
 
-      const isMissingOffensiveStats = ['yards', 'average', 'longest' , 'touchdowns'].every((key) => !Boolean(prospectStats.stats[key]))
-      const isMissingDefensiveStats = ['tackles', 'interceptions', 'sacks', 'forcedFumbles'].every((key) => !Boolean(prospectStats.stats[key]))
+      const defensiveRequiredFields = ['tackles', 'interceptions', 'sacks', 'forcedFumbles']; 
+      const offensiveRequiredFields = ['yards', 'average', 'longest' , 'touchdowns'];
+      const isMissingOffensiveStats = offensiveRequiredFields.filter((key) => ![null, undefined].includes(prospectStats.stats[key])).length !== offensiveRequiredFields.length;
+      const isMissingDefensiveStats = defensiveRequiredFields.filter((key) => ![null, undefined].includes(prospectStats.stats[key])).length !== defensiveRequiredFields.length;
       
       if (
         isOffensive && 
@@ -54,7 +56,6 @@ export class ProspectStatsController extends ProspectStatsService {
 
       if (!isOffensive && isMissingDefensiveStats){
         throw 'Defensive stats must have tackles, interceptions, sacks and fumbles'
-
       }
 
       const response = await this.setStats(prospectStats);

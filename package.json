@@ -42,7 +42,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Q-Angelo/aws-node-typescript-rest-api.git"
+    "url": "git+https://github.com/brognilucas/serverless-prospect-api"
   },
   "keywords": [
     "Nodejs",
