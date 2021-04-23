@@ -5,6 +5,7 @@
 	"exclude": [
 		"app/model/dto/**.ts", 
 		"app/model/vo/**.ts",
+		"app/utils/model/vo/**.ts",
 		"coverage",
 		"tests"
 	]

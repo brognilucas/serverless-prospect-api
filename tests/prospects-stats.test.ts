@@ -83,6 +83,62 @@ describe("Create Prospect Stats [POST]", () => {
       });
   });
 
+  it("failure - Missing type", () => {
+
+    const prospectModel = sinon.mock(ProspectModel)
+    const prospectStatsModel = sinon.mock(ProspectStatsModel)
+
+    prospectModel.expects("findOne").chain('exec').resolves(prospectsMock.defensiveProspect);
+
+
+    const mock = {...prospectsMock.mockDefensiveStats }
+
+    delete mock['type']
+
+    return lambdaTester(createStats)
+      .event({
+        pathParameters: { id: prospectsMock.defensiveProspect.id },
+        body: JSON.stringify({
+          ...mock
+        }),
+      })
+      .expectResult((result: any) => {
+        const body = JSON.parse(result.body);
+        expect(result.statusCode).to.equal(400);
+        expect(body.message).to.equal('Invalid type')
+        prospectStatsModel.restore();
+        prospectModel.restore();
+      });
+  });
+
+  it("failure - Missing year", () => {
+
+    const prospectModel = sinon.mock(ProspectModel)
+    const prospectStatsModel = sinon.mock(ProspectStatsModel)
+
+    prospectModel.expects("findOne").chain('exec').resolves(prospectsMock.defensiveProspect);
+
+
+    const mock = {...prospectsMock.mockDefensiveStats }
+
+    delete mock['year']
+
+    return lambdaTester(createStats)
+      .event({
+        pathParameters: { id: prospectsMock.defensiveProspect.id },
+        body: JSON.stringify({
+          ...mock
+        }),
+      })
+      .expectResult((result: any) => {
+        const body = JSON.parse(result.body);
+        expect(result.statusCode).to.equal(400);
+        expect(body.message).to.equal('Year is required')
+        prospectStatsModel.restore();
+        prospectModel.restore();
+      });
+  });
+
   it("failure - prospect already has stats for defensive and year", () => {
 
     const prospectModel = sinon.mock(ProspectModel)
