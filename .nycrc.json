@@ -1,12 +1,19 @@
 {
 	"all": true,
 	"report-dir": "./coverage",
-	"extension": [".ts"],
+	"extension": [
+		".ts"
+	],
+	"extends": "@istanbuljs/nyc-config-typescript",
+	"reporter": [
+		"text"
+	],
 	"exclude": [
-		"app/model/dto/**.ts", 
+		"app/model/dto/**.ts",
 		"app/model/vo/**.ts",
 		"app/utils/model/vo/**.ts",
 		"coverage",
 		"tests"
 	]
+
 }
