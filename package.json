@@ -7,7 +7,7 @@
     "local": "serverless offline",
     "deploy": "serverless deploy",
     "test": "cross-env NODE_ENV=dev mocha -r ts-node/register tests/*.test.ts --exit",
-    "coverage": "nyc --reporter lcov npm run test",
+    "coverage": "npx nyc --reporter lcov npm run test",
     "lint": "eslint . --ext .ts"
   },
   "pre-commit": [
@@ -20,6 +20,7 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/aws-lambda": "^8.10.51",
     "@types/chai": "^4.2.11",
     "@types/dotenv-safe": "^8.1.0",
