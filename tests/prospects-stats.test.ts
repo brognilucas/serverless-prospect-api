@@ -52,8 +52,32 @@ describe("Create Prospect Stats [POST]", () => {
       })
       .expectResult((result: any) => {
         const body = JSON.parse(result.body);
+        expect(result.statusCode).to.equal(404);
+        expect(body.message).to.equal('Prospect not found')
+        prospectStatsModel.restore();
+        prospectModel.restore();
+      });
+  });
+
+  it("failure - Invalid type", () => {
+
+    const prospectModel = sinon.mock(ProspectModel)
+    const prospectStatsModel = sinon.mock(ProspectStatsModel)
+
+    prospectModel.expects("findOne").chain('exec').resolves(prospectsMock.defensiveProspect);
+
+    return lambdaTester(createStats)
+      .event({
+        pathParameters: { id: prospectsMock.defensiveProspect.id },
+        body: JSON.stringify({
+          ...prospectsMock.mockDefensiveStats,
+          type: 'Some invalid type'
+        }),
+      })
+      .expectResult((result: any) => {
+        const body = JSON.parse(result.body);
         expect(result.statusCode).to.equal(400);
-        expect(body.message).to.equal('Prospect not Found')
+        expect(body.message).to.equal('Invalid type')
         prospectStatsModel.restore();
         prospectModel.restore();
       });

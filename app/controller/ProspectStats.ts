@@ -33,12 +33,15 @@ export class ProspectStatsController extends ProspectStatsService {
       const types = [...defensiveTypes, ...offensivetypes];
 
       if (!prospectStats.type || (!types.includes(prospectStats.type))) {
-        throw 'Invalid type ' + types;
+        throw 'Invalid type';
       }
 
       const service = new ProspectService(prospectModel);
       const prospect = await service.findById(prospectStats.prospect);
-      if (!prospect) throw 'Prospect not Found';
+      
+      if (!prospect) {
+        return MessageUtil.error(404, "Prospect not found");
+      }
 
       const prevStats = await this.findStats(prospectStats.prospect, prospectStats.year, prospectStats.type);
 
