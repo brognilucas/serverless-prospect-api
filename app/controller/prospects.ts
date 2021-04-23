@@ -1,16 +1,19 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { Model } from "mongoose";
 import { MessageUtil } from "../utils/message";
 import { ProspectService } from "../service/prospect";
 import { ProspectDTO } from "../model/dto/ProspectDTO";
 import { v4 as uuid } from "uuid";
 import { Position } from "../model/dto/PositionsEnum";
+import { IEvent } from "app/model/dto/IEvent";
+import { ProspectDocument } from "app/model";
 
 export class ProspectController extends ProspectService {
-  constructor(prospects: Model<any>) {
+  constructor(prospects: Model<ProspectDocument>) {
     super(prospects);
   }
 
-  async create(event: any) {
+  async create(event: IEvent) {
     try {
       const prospect: ProspectDTO = JSON.parse(event.body);
 
@@ -34,9 +37,9 @@ export class ProspectController extends ProspectService {
     }
   }
 
-  async update(event: any) {
+  async update(event: IEvent) {
     const { id } = event.pathParameters;
-    const body: object = JSON.parse(event.body);
+    const body: ProspectDTO = JSON.parse(event.body);
 
     try {
       const result = await this.updateById(id, body);
@@ -54,13 +57,11 @@ export class ProspectController extends ProspectService {
 
       return MessageUtil.success(result);
     } catch (err) {
-      console.error(err);
-
       return MessageUtil.error(err.code, err.message);
     }
   }
 
-  async findOne(event: any) {
+  async findOne(event: IEvent) {
     const { id } = event.pathParameters;
 
     try {
@@ -68,31 +69,27 @@ export class ProspectController extends ProspectService {
 
       return MessageUtil.success(result);
     } catch (err) {
-      console.error(err);
-
       return MessageUtil.error(err.code, err.message);
     }
   }
 
-  async deleteOne(event: any) {
+  async deleteOne(event: IEvent) {
     const { id } = event.pathParameters;
 
     try {
       const result = await this.deleteById(id);
 
-      if (!result || !result.deletedCount)  {
+      if (!result || !result.deletedCount) {
         return MessageUtil.error(404, "Prospect not found!");
       }
 
       return MessageUtil.success(result);
     } catch (err) {
-      console.error(err);
-
       return MessageUtil.error(err.code, err.message);
     }
   }
 
-  async disableProspect(event){
+  async disableProspect(event) {
     const { id } = event.pathParameters;
     try {
       const result = await this.disable(id);
@@ -103,14 +100,12 @@ export class ProspectController extends ProspectService {
 
       return MessageUtil.success(result);
     } catch (err) {
-      console.error(err);
-
       return MessageUtil.error(err.code, err.message);
     }
   }
 
 
-  async enableProspect(event){
+  async enableProspect(event) {
     const { id } = event.pathParameters;
     try {
       const result = await this.enable(id);
@@ -121,8 +116,6 @@ export class ProspectController extends ProspectService {
 
       return MessageUtil.success(result);
     } catch (err) {
-      console.error(err);
-
       return MessageUtil.error(err.code, err.message);
     }
   }

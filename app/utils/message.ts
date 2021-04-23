@@ -11,9 +11,9 @@ class Result {
   private statusCode: number;
   private code: number;
   private message: string;
-  private data?: any;
+  private data?: unknown;
 
-  constructor(statusCode: number, code: number, message: string, data?: any) {
+  constructor(statusCode: number, code: number, message: string, data?: unknown) {
     this.statusCode = statusCode;
     this.code = code;
     this.message = message;
@@ -33,13 +33,13 @@ class Result {
 }
 
 export class MessageUtil {
-  static success(data: object): ResponseVO {
+  static success(data: unknown): ResponseVO {
     const result = new Result(StatusCode.success, 0, 'success', data);
 
     return result.bodyToString();
   }
 
-  static error(code: number = 1000, message: string) {
+  static error(code: number, message: string): ResponseVO {
     const httpCode = code === 404 ? StatusCode.notFound : StatusCode.badRequest; 
     const result = new Result(httpCode, code, message); 
 

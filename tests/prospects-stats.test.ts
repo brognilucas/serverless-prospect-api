@@ -175,7 +175,7 @@ describe("Create Prospect Stats [POST]", () => {
       });
   });
 
-  it("failure - defensive player - prospect missing forcedFumbles", () => {
+  it("failure - defensive player - prospect missing sacks", () => {
    
     const prospectModel = sinon.mock(ProspectModel)
     const prospectStatsModel = sinon.mock(ProspectStatsModel)
@@ -204,5 +204,6 @@ describe("Create Prospect Stats [POST]", () => {
         prospectModel.restore();
       });
   });
+
 
 });

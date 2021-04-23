@@ -14,24 +14,25 @@ dotenv.config({
 import { prospect, prospectStats as prospectStatsModel } from "./model";
 import { ProspectController } from "./controller/prospects";
 import { ProspectStatsController } from './controller/ProspectStats'
+import { IEvent } from "./model/dto/IEvent";
 
 const prospectController = new ProspectController(prospect);
 const prospectStats = new ProspectStatsController(prospectStatsModel);
 
-export const create: Handler = (event: any) => prospectController.create(event);
+export const create: Handler = (event: IEvent) => prospectController.create(event);
 
-export const update: Handler = (event: any) => prospectController.update(event);
+export const update: Handler = (event: IEvent) => prospectController.update(event);
 
 export const find: Handler = () => prospectController.find();
 
-export const findOne: Handler = (event: any) => prospectController.findOne(event); 
+export const findOne: Handler = (event: IEvent) => prospectController.findOne(event); 
 
-export const deleteOne: Handler = (event: any) => prospectController.deleteOne(event);
+export const deleteOne: Handler = (event: IEvent) => prospectController.deleteOne(event);
 
-export const enable: Handler = (event: any) => prospectController.enableProspect(event);
+export const enable: Handler = (event: IEvent) => prospectController.enableProspect(event);
 
-export const disable: Handler = (event: any) => prospectController.disableProspect(event);
+export const disable: Handler = (event: IEvent) => prospectController.disableProspect(event);
 
-export const createStats: Handler = (event: any) => prospectStats.create(event)
+export const createStats: Handler = (event: IEvent) => prospectStats.create(event)
 
 

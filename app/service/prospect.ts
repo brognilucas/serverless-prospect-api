@@ -1,9 +1,10 @@
+import { ProspectDocument } from "app/model";
 import { Model } from "mongoose";
 import { ProspectDTO } from "../model/dto/ProspectDTO";
 
 export class ProspectService {
-  private prospects: Model<any>;
-  constructor(prospects: Model<any>) {
+  private prospects: Model<ProspectDocument>;
+  constructor(prospects: Model<ProspectDocument>) {
     this.prospects = prospects;
   }
 
@@ -11,7 +12,7 @@ export class ProspectService {
     return this.prospects.create(body);
   }
 
-  public updateById(id: string, data: object): Promise<ProspectDTO> {
+  public updateById(id: string, data: ProspectDTO): Promise<ProspectDTO> {
     return this.prospects.findOneAndUpdate({ id }, { $set: data }, { new: true }).exec();
   }
 
@@ -23,15 +24,15 @@ export class ProspectService {
     return this.prospects.findOne({ id }).exec();
   }
 
-  public deleteById(id: string): Promise<any> {
+  public deleteById(id: string): Promise<{ deletedCount: number }> {
     return this.prospects.deleteOne({ id }).exec()
   }
 
-  public disable(id): Promise<ProspectDTO> {
+  public disable(id: string): Promise<ProspectDTO> {
     return this.prospects.findOneAndUpdate({ id }, { $set: { active: false } }).exec();
   }
 
-  public enable(id): Promise<ProspectDTO> {
+  public enable(id: string): Promise<ProspectDTO> {
     return this.prospects.findOneAndUpdate({ id }, { $set: { active: true } }).exec();
 
   }

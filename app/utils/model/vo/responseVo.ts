@@ -1,7 +1,7 @@
 export class ResponseBodyVO {
   code: number;
   message: string;
-  data?: object;
+  data?: unknown;
 }
 
 export interface ResponseVO {

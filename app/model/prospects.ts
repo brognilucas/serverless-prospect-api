@@ -3,13 +3,14 @@ import { Position } from "./dto/PositionsEnum";
 
 export type ProspectDocument = mongoose.Document & {
   name: string;
-  id: String;
+  id: string;
   description?: string;
   jerseyNumber?: number;
   position: Position;
   college: string;
   size: string;
   weight: string;
+  draftYear: number;
   createdAt: Date;
 };
 
@@ -20,6 +21,7 @@ const prospectSchema = new mongoose.Schema({
   jerseyNumber: String,
   position: String,
   college: String,
+  draftYear: Number,
   size: String,
   weight: String,
   active: Boolean,
