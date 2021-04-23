@@ -22,6 +22,7 @@ export class PassingStats extends GeneralOffensiveStats {
 
 export class RushingStats extends GeneralOffensiveStats {
   attemps: number;
+  fumbles: number;
 }
 
 export class ReceivingStats extends GeneralOffensiveStats {

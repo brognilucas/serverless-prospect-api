@@ -28,7 +28,7 @@ export class ProspectStatsController extends ProspectStatsService {
       }
 
       const defensiveTypes = [StatType.defensive]
-      const offensivetypes = [StatType.passing, StatType.receiving, StatType.receiving];
+      const offensivetypes = [StatType.passing, StatType.receiving, StatType.rushing];
 
       const types = [...defensiveTypes, ...offensivetypes];
 
@@ -43,7 +43,7 @@ export class ProspectStatsController extends ProspectStatsService {
       const prevStats = await this.findStats(prospectStats.prospect, prospectStats.year, prospectStats.type);
 
       if (prevStats) {
-        throw `Prospect already has stats for ${prospectStats.year}`
+        throw `Prospect already has ${prospectStats.type} stats for ${prospectStats.year}`
       }
 
       if (!prospectStats.stats || !prospectStats.stats) throw 'Missing stats';

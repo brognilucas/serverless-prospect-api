@@ -1,5 +1,6 @@
-import { StatType } from "../app/model/dto/ProspectsStatsDTO";
+import { ProspectStats, StatType } from "../app/model/dto/ProspectsStatsDTO";
 import { Position } from "../app/model/dto/PositionsEnum";
+import { PassingStats, ReceivingStats } from "app/model/dto/OffensiveStatsDTO";
 
 export const mockDefensiveStats = {
 	"year": 2019,
@@ -17,6 +18,53 @@ export const mockDefensiveStats = {
 		"touchdowns": 0,
 		"fumblesRecovered": 1
 	}
+}
+
+export const mockRushingStats = {
+	year: 2019,
+	type: StatType.rushing,
+	stats: {
+		attemps: 300,
+		average: 4.3,
+		longest: 40,
+		touchdowns: 8,
+		yards: 100,
+		fumbles: 0
+	}
+}
+
+const receivingStats: ReceivingStats = {
+	yards: 1000,
+	targets: 200,
+	receptions: 140,
+	average: 14.5,
+	longest: 73,
+	touchdowns: 6
+}
+
+export const mockReceivingStats: ProspectStats = {
+	prospect: 'randomstring',
+	year: 2019,
+	type: StatType.receiving,
+	stats: receivingStats
+}
+
+const passingStats: PassingStats = {
+	attempts: 100,
+	completions: 100,
+	interceptions: 100,
+	rating: 100,
+	average: 10,
+	touchdowns: 30,
+	yards: 850,
+	longest: 300
+}
+
+export const mockPassingStats: ProspectStats = {
+	prospect: 'randomstring',
+	year: 2019,
+	type: StatType.passing,
+	stats: passingStats
 }
 
 export const defensiveProspect = {
