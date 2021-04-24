@@ -79,3 +79,10 @@ functions:
       - http:
           path: prospects/{id}/stats
           method: post
+
+  findStatsByProspect: 
+    handler: app/handler.findStatsByProspect
+    events:
+      - http:
+          path: prospects/{id}/stats
+          method: get

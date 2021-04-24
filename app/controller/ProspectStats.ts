@@ -36,9 +36,9 @@ export class ProspectStatsController extends ProspectStatsService {
         throw 'Invalid type';
       }
 
-      const service = new ProspectService(prospectModel);
-      const prospect = await service.findById(prospectStats.prospect);
-      
+      const prospectService = new ProspectService(prospectModel);
+      const prospect = await prospectService.findById(prospectStats.prospect);
+
       if (!prospect) {
         return MessageUtil.error(404, "Prospect not found");
       }
@@ -75,5 +75,26 @@ export class ProspectStatsController extends ProspectStatsService {
     } catch (err) {
       return MessageUtil.error(err.code || 400, err.message || err);
     }
+  }
+
+  async findByProspect(event: IEvent) {
+
+    const { id } = event.pathParameters;
+    const prospectService = new ProspectService(prospectModel);
+
+    const [prospectStats, prospect] = await Promise.all([
+      this.findStatsByProspect(id),
+      prospectService.findById(id)
+    ])
+
+    if (!prospect) return MessageUtil.error(404, 'Prospect not found');
+
+
+    const response = {
+      prospect: prospect,
+      stats: prospectStats
+    }
+
+    return MessageUtil.success(response);
   }
 }

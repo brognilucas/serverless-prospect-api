@@ -1,6 +1,6 @@
 import lambdaTester from "lambda-tester";
 import { expect } from "chai";
-import { createStats } from "../app/handler";
+import { createStats, findStatsByProspect } from "../app/handler";
 import * as prospectsMock from "./prospects-stats.mock";
 import { prospect as ProspectModel } from "../app/model/prospects";
 import { prospectStats as ProspectStatsModel } from "../app/model/prospect-stats";
@@ -91,7 +91,7 @@ describe("Create Prospect Stats [POST]", () => {
     prospectModel.expects("findOne").chain('exec').resolves(prospectsMock.defensiveProspect);
 
 
-    const mock = {...prospectsMock.mockDefensiveStats }
+    const mock = { ...prospectsMock.mockDefensiveStats }
 
     delete mock['type']
 
@@ -119,7 +119,7 @@ describe("Create Prospect Stats [POST]", () => {
     prospectModel.expects("findOne").chain('exec').resolves(prospectsMock.defensiveProspect);
 
 
-    const mock = {...prospectsMock.mockDefensiveStats }
+    const mock = { ...prospectsMock.mockDefensiveStats }
 
     delete mock['year']
 
@@ -511,7 +511,50 @@ describe("Create Prospect Stats [POST]", () => {
         prospectModel.restore();
       });
   });
+});
 
+
+describe("Get Prospect Stats [GET]", () => {
+  it("success", () => {
+
+    const prospectModel = sinon.mock(ProspectModel)
+    const prospectStatsModel = sinon.mock(ProspectStatsModel)
+
+
+    prospectModel.expects("findOne").chain('exec').resolves(prospectsMock.offensiveProspect)
+    prospectStatsModel.expects("find").chain('lean').resolves(prospectsMock.getData.stats);
+
+    return lambdaTester(findStatsByProspect)
+      .event({
+        pathParameters: { id: prospectsMock.getData.prospect.id }
+      })
+      .expectResult((result: any) => {
+        const body = JSON.parse(result.body);
+        expect(body.data).to.eql(prospectsMock.getData)
+        prospectStatsModel.restore();
+        prospectModel.restore();
+      });
+  });
+
+  it("Fail with prospect not found", () => {
+
+    const prospectModel = sinon.mock(ProspectModel)
+    const prospectStatsModel = sinon.mock(ProspectStatsModel)
+
+    prospectModel.expects("findOne").chain('exec').resolves(null)
+
+    return lambdaTester(findStatsByProspect)
+      .event({
+        pathParameters: { id: prospectsMock.getData.prospect.id }
+      })
+      .expectResult((result: any) => {
+        const body = JSON.parse(result.body);
+        expect(body.code).to.eql(404);
+        expect(body.message).to.eql('Prospect not found');
+        prospectStatsModel.restore();
+        prospectModel.restore();
+      });
+  });
 
 
 });

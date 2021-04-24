@@ -33,6 +33,7 @@ export const enable: Handler = (event: IEvent) => prospectController.enableProsp
 
 export const disable: Handler = (event: IEvent) => prospectController.disableProspect(event);
 
-export const createStats: Handler = (event: IEvent) => prospectStats.create(event)
+export const createStats: Handler = (event: IEvent) => prospectStats.create(event);
 
+export const findStatsByProspect: Handler = (event: IEvent) => prospectStats.findByProspect(event);
 

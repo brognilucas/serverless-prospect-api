@@ -16,4 +16,8 @@ export class ProspectStatsService {
     return this.prospectsStats.findOne({ prospect: prospectId, year, type }).lean()
   }
 
+  protected async findStatsByProspect(prospectId: string): Promise<ProspectStats> {
+    return this.prospectsStats.find({ prospect: prospectId }, { _id: 0, __v: 0 }).lean();
+  }
+
 }

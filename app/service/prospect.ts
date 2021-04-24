@@ -17,11 +17,11 @@ export class ProspectService {
   }
 
   public findProspects(): Promise<ProspectDTO[]> {
-    return this.prospects.find({}).exec();
+    return this.prospects.find({}, { _id: 0 ,  __v: 0}).exec();
   }
 
   public findById(id: string): Promise<ProspectDTO> {
-    return this.prospects.findOne({ id }).exec();
+    return this.prospects.findOne({ id }, { _id: 0 , __v: 0 }).exec();
   }
 
   public deleteById(id: string): Promise<{ deletedCount: number }> {

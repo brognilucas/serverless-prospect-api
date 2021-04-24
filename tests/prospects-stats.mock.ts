@@ -83,6 +83,12 @@ export const offensiveProspect = {
 	college: "Some College",
 	position: Position.QB,
 	id: 'randomstring',
-	createdAt: new Date(),
+	createdAt: new Date().toLocaleDateString(),
 	__v: 0,
 };
+
+
+export const getData = {
+	prospect: offensiveProspect,
+	stats: [mockReceivingStats]
+}
