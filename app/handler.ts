@@ -37,3 +37,5 @@ export const createStats: Handler = (event: IEvent) => prospectStats.create(even
 
 export const findStatsByProspect: Handler = (event: IEvent) => prospectStats.findByProspect(event);
 
+export const compareProspectsByStats: Handler = (event: IEvent) => prospectStats.findRelatedProspects(event);
+

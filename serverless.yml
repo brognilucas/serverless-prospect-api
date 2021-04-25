@@ -86,3 +86,11 @@ functions:
       - http:
           path: prospects/{id}/stats
           method: get
+
+  compareProspectsByStats: 
+    handler: app/handler.compareProspectsByStats
+    events:
+      - http:
+          path: prospects/{id}/relateds
+          method: get
+

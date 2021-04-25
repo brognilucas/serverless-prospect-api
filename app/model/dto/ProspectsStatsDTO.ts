@@ -11,9 +11,16 @@ export enum StatType {
 }
 
 
-export class ProspectStats {
+export class ComparisonStats {
+  stats: PassingStats[] | ReceivingStats[] | RushingStats[] | DefensiveStatsDTO[]
+}
+
+export class Stats {
+  stats: PassingStats | ReceivingStats | RushingStats | DefensiveStatsDTO
+}
+
+export class ProspectStats extends Stats {
   prospect: ProspectDTO['id'];
   year: number;
   type: StatType;
-  stats: PassingStats | ReceivingStats | RushingStats | DefensiveStatsDTO;
 }
