@@ -52,18 +52,18 @@ export class ProspectStatsService {
     const margin = 0.25;
 
     return defensivePlayers.filter((p) => p.prospect !== 'randomstring').filter((defensivePlayer) => {
-      const statsDefensivePlayer = defensivePlayer.stats; 
+      const statsDefensivePlayer = defensivePlayer.stats;
 
-      const fields = ['sacks', 'tackles', 'interceptions', 'forcedFumbles'];
 
-      const relatedFields = fields.map((field) => {
-        const marginUP = player[field] + player[field] * margin;
-        const marginDown = player[field] - player[field] * margin;
+      const relatedFields = Object.keys(player).map((field) => {
+        const marginUP = player[field] > 0 ? player[field] + player[field] * margin : 1;
+        const marginDown = player[field] > 0 ? player[field] - player[field] * margin : 0;
 
-        return statsDefensivePlayer[field] >= marginDown && statsDefensivePlayer[field] <= marginUP
-      })
+        return (statsDefensivePlayer[field] >= marginDown && statsDefensivePlayer[field] <= marginUP) ?
+          field : false
+      }).filter((relatedField) => relatedField);
 
-      return relatedFields.filter((relatedField) => relatedField).length >= 2
+      return (relatedFields.length / Object.keys(player).length) > 0.70;
     })
 
   }
