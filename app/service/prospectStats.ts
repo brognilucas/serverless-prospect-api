@@ -1,8 +1,6 @@
 import { ProspectStatsDocument } from "../model";
 import { ProspectStats, ComparisonStats, StatType, Stats } from "../model/dto/ProspectsStatsDTO";
-import { Model, Mongoose } from "mongoose";
-import { DefensiveStatsDTO } from "app/model/dto/DefensiveStatsDTO";
-import { ProspectDTO } from "app/model/dto/ProspectDTO";
+import { Model } from "mongoose";
 
 export class ProspectStatsService {
   private prospectsStats: Model<ProspectStatsDocument>;
@@ -26,9 +24,7 @@ export class ProspectStatsService {
     return this.prospectsStats.find({ prospect: prospectId }, { _id: 0, __v: 0 }).lean();
   }
 
-
-
-  groupStatsByProspectAndAccumulateIt(prospectStats: ProspectStats[]): Array<unknown> {
+  groupStatsByProspectAndAccumulateIt(prospectStats: ProspectStats[]): ProspectStats[] {
     const statsMap = {}
 
     prospectStats.map(({ prospect, stats }) => {
@@ -38,9 +34,9 @@ export class ProspectStatsService {
       })
     })
 
-    return Object.keys(statsMap).map((key) => {
+    return Object.keys(statsMap).map((key: string) => {
       return {
-        prospect: key,
+        prospect:  key,
         stats: this.accumulateStats(statsMap[key]),
         years: statsMap[key].length
       }
@@ -48,10 +44,10 @@ export class ProspectStatsService {
 
   }
 
-  findDefensiveRelateds(player: DefensiveStatsDTO, defensivePlayers: ProspectStats[]): unknown[] {
+  findRelateds(player: Stats['stats'], relatedPlayers: ProspectStats[]): unknown[] {
     const margin = 0.25;
 
-    return defensivePlayers.filter((p) => p.prospect !== 'randomstring').filter((defensivePlayer) => {
+    return relatedPlayers.filter((defensivePlayer) => {
       const statsDefensivePlayer = defensivePlayer.stats;
 
 
@@ -67,16 +63,6 @@ export class ProspectStatsService {
     })
 
   }
-
-  findRelateds(player: unknown, comparisons: unknown[], type: string): unknown[] {
-    if (type === 'defensive') {
-      return this.findDefensiveRelateds(player as DefensiveStatsDTO, comparisons as ProspectStats[])
-    }
-
-    return []
-  }
-
-
 
   accumulateStats(stats: ComparisonStats['stats']): Stats['stats'] {
     const accumulatedStats = {};

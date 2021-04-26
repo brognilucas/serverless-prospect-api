@@ -21,6 +21,7 @@ export class Stats {
 
 export class ProspectStats extends Stats {
   prospect: ProspectDTO['id'];
-  year: number;
-  type: StatType;
+  year?: number;
+  type?: StatType;
+  years?: number;
 }

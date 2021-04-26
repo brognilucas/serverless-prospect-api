@@ -114,7 +114,7 @@ export class ProspectStatsController extends ProspectStatsService {
 
     const statsGroupedByProspect = this.groupStatsByProspectAndAccumulateIt(otherProspectsStats);
 
-    const relateds = this.findRelateds(accumulatedStats, statsGroupedByProspect, statsType);
+    const relateds = this.findRelateds(accumulatedStats, statsGroupedByProspect);
 
 
     return MessageUtil.success({ prospect: accumulatedStats, relateds })

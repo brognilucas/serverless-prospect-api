@@ -28,6 +28,9 @@ const prospectSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
+prospectSchema.index({ id: 1 }, { unique: true });
+prospectSchema.index({ name: 1, position: 1, college: 1, draftYear: 1 }, { unique: true });
+
 export const prospect =
   mongoose.models.prospects ||
   mongoose.model<ProspectDocument>(
