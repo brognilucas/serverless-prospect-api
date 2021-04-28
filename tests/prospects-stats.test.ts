@@ -1,9 +1,10 @@
 import lambdaTester from "lambda-tester";
 import { expect } from "chai";
-import { createStats, findStatsByProspect } from "../app/handler";
+import { createStats, findStatsByProspect, compareProspectsByStats } from "../app/handler";
 import * as prospectsMock from "./prospects-stats.mock";
 import { prospect as ProspectModel } from "../app/model/prospects";
 import { prospectStats as ProspectStatsModel } from "../app/model/prospect-stats";
+import { ProspectStatsService } from "../app/service/prospectStats";
 const sinon = require('sinon');
 require('sinon-mongoose');
 
@@ -117,7 +118,6 @@ describe("Create Prospect Stats [POST]", () => {
     const prospectStatsModel = sinon.mock(ProspectStatsModel)
 
     prospectModel.expects("findOne").chain('exec').resolves(prospectsMock.defensiveProspect);
-
 
     const mock = { ...prospectsMock.mockDefensiveStats }
 
@@ -555,6 +555,59 @@ describe("Get Prospect Stats [GET]", () => {
         prospectModel.restore();
       });
   });
-
-
 });
+
+describe('Get Relateds [GET]', () => {
+
+  it("Error - Must inform a type", () => {
+    return lambdaTester(compareProspectsByStats)
+      .event({
+        pathParameters: { id: prospectsMock.getData.prospect.id }
+      })
+      .expectResult((result: any) => {
+        const body = JSON.parse(result.body);
+        expect(body.code).to.eql(400);
+        expect(body.message).to.eql('Must inform which type of stats you want compare');
+      });
+  });
+
+  it("Success - Must return an object with prospect and relateds", () => {
+    const prospectStatsModel = sinon.mock(ProspectStatsModel);
+
+    prospectStatsModel.expects("find").chain('lean').resolves(
+      [{
+        ...prospectsMock.mockPassingStats, stats: {
+          ...prospectsMock.mockPassingStats.stats,
+          average: 10,
+          touchdowns: 30,
+          yards: 850,
+          longest: 300
+        }
+      }]
+    );
+
+    const related = {};
+
+    Object.keys(prospectsMock.mockPassingStats.stats).map((key) => {
+      related[key] = prospectsMock.mockPassingStats.stats[key] * 0.9 || 0;
+    })
+
+    const mockService = sinon.fake.returns([
+      { stats: related }
+    ]);
+    sinon.replace(ProspectStatsService.prototype, "findPossibleRelateds", mockService);
+
+
+    return lambdaTester(compareProspectsByStats)
+      .event({
+        pathParameters: { id: prospectsMock.getData.prospect.id },
+        queryStringParameters: { statsType: 'defensive' }
+      })
+      .expectResult((result: any) => {
+        const body = JSON.parse(result.body);
+        expect(body.code).to.eql(0);
+        expect(body.data).to.have.property('prospect');
+        expect(body.data).to.have.property('relateds');
+      });
+  });
+})

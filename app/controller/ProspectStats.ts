@@ -101,22 +101,14 @@ export class ProspectStatsController extends ProspectStatsService {
 
   async findRelatedProspects(event: IEvent) {
     const { id } = event.pathParameters;
-    const { statsType } = event?.queryStringParameters || {};
-
+    const { statsType } = event.queryStringParameters || {};
     if (!statsType) return MessageUtil.error(400, 'Must inform which type of stats you want compare');
-
     const prospectCompleteInformation = await this.find({ prospect: id, type: statsType });
-
     const statsList = prospectCompleteInformation.map(({ stats }) => stats) as ComparisonStats['stats'];
     const accumulatedStats = this.accumulateStats(statsList);
-
-    const otherProspectsStats = await this.find({ prospect: { $ne: id }, type: statsType });
-
+    const otherProspectsStats = await this.findPossibleRelateds(id, statsType);
     const statsGroupedByProspect = this.groupStatsByProspectAndAccumulateIt(otherProspectsStats);
-
     const relateds = this.findRelateds(accumulatedStats, statsGroupedByProspect);
-
-
     return MessageUtil.success({ prospect: accumulatedStats, relateds })
   }
 
