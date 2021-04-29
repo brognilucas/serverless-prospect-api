@@ -49,11 +49,9 @@ export class ProspectStatsService {
     return relatedPlayers.filter((relatedPlayer) => {
       const statsRelatedPlayer = relatedPlayer.stats;
 
-
       const relatedFields = Object.keys(player).map((field) => {
-        const marginUP = player[field] > 0 ? player[field] + player[field] * margin : 1;
-        const marginDown = player[field] > 0 ? player[field] - player[field] * margin : 0;
-
+        const marginUP = player[field] && player[field] > 0 ? player[field] + player[field] * margin : 1;
+        const marginDown = player[field] && player[field] > 0 ? player[field] - player[field] * margin : 0;
         return (
           statsRelatedPlayer[field] >= marginDown
           && statsRelatedPlayer[field] <= marginUP

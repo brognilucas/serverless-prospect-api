@@ -6,6 +6,7 @@ import { prospect as ProspectModel } from "../app/model/prospects";
 import { prospectStats as ProspectStatsModel } from "../app/model/prospect-stats";
 import { ProspectStatsService } from "../app/service/prospectStats";
 import { PassingStats } from "app/model/dto/OffensiveStatsDTO";
+import { ProspectStats } from "app/model/dto/ProspectsStatsDTO";
 const sinon = require('sinon');
 require('sinon-mongoose');
 
@@ -628,7 +629,7 @@ describe("Unit Service [ProspectStatsService]", () => {
     expect(result[0].years).to.eql(2);
   })
 
-  it("Should findRelateds return an array with prospects which has related data ", () => {
+  it("Should findRelateds return an array with prospects which same amount", () => {
     const prospectStatsModel = sinon.mock(ProspectStatsModel);
     const service = new ProspectStatsService(prospectStatsModel);
 
@@ -638,6 +639,42 @@ describe("Unit Service [ProspectStatsService]", () => {
 
     expect(result.length).to.eql(2);
   })
+
+  it("Should findRelateds return an array with prospects which has related data with margin up ", () => {
+    const prospectStatsModel = sinon.mock(ProspectStatsModel);
+    const service = new ProspectStatsService(prospectStatsModel);
+
+
+    const stats: ProspectStats['stats'] = {} as PassingStats;
+
+    Object.keys(prospectsMock.mockPassingStats.stats).map((key) => {
+      stats[key] = prospectsMock.mockPassingStats.stats[key] + 1;
+    })
+
+    const prospect = prospectsMock.mockPassingStats.stats;
+    const relateds = [{ ...prospectsMock.mockPassingStats, stats, year: 2020 }]
+    const result = service.findRelateds(prospect, relateds);
+
+    expect(result.length).to.eql(1);
+  });
+
+  it("Should findRelateds return an array with prospects which has related data with margin down ", () => {
+    const prospectStatsModel = sinon.mock(ProspectStatsModel);
+    const service = new ProspectStatsService(prospectStatsModel);
+
+
+    const stats: ProspectStats['stats'] = {} as PassingStats;
+
+    Object.keys(prospectsMock.mockPassingStats.stats).map((key) => {
+      stats[key] = prospectsMock.mockPassingStats.stats[key] ? prospectsMock.mockPassingStats.stats[key] - 1 : 0;
+    })
+
+    const prospect = prospectsMock.mockPassingStats.stats;
+    const relateds = [{ ...prospectsMock.mockPassingStats, stats, year: 2020 }]
+    const result = service.findRelateds(prospect, relateds);
+
+    expect(result.length).to.eql(1);
+  });
 
   it("Should findRelateds not return any prospect", () => {
     const prospectStatsModel = sinon.mock(ProspectStatsModel);
