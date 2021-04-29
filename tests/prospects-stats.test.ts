@@ -5,6 +5,7 @@ import * as prospectsMock from "./prospects-stats.mock";
 import { prospect as ProspectModel } from "../app/model/prospects";
 import { prospectStats as ProspectStatsModel } from "../app/model/prospect-stats";
 import { ProspectStatsService } from "../app/service/prospectStats";
+import { PassingStats } from "app/model/dto/OffensiveStatsDTO";
 const sinon = require('sinon');
 require('sinon-mongoose');
 
@@ -610,4 +611,52 @@ describe('Get Relateds [GET]', () => {
         expect(body.data).to.have.property('relateds');
       });
   });
+})
+
+describe("Unit Service [ProspectStatsService]", () => {
+
+  it("Should groupStatsByProspectAndAccumulateIt return the data grouped by prospect id ", () => {
+    const prospectStatsModel = sinon.mock(ProspectStatsModel);
+
+    const service = new ProspectStatsService(prospectStatsModel);
+
+    const prospects = [prospectsMock.mockPassingStats, { ...prospectsMock.mockPassingStats, year: 2020 }]
+    const result = service.groupStatsByProspectAndAccumulateIt(prospects);
+
+    expect(result.length).to.eql(1);
+    expect(result[0].stats.touchdowns).to.eql(prospectsMock.mockPassingStats.stats.touchdowns * 2)
+    expect(result[0].years).to.eql(2);
+  })
+
+  it("Should findRelateds return an array with prospects which has related data ", () => {
+    const prospectStatsModel = sinon.mock(ProspectStatsModel);
+    const service = new ProspectStatsService(prospectStatsModel);
+
+    const prospect = prospectsMock.mockPassingStats.stats;
+    const relateds = [prospectsMock.mockPassingStats, { ...prospectsMock.mockPassingStats, year: 2020 }]
+    const result = service.findRelateds(prospect, relateds);
+
+    expect(result.length).to.eql(2);
+  })
+
+  it("Should findRelateds not return any prospect", () => {
+    const prospectStatsModel = sinon.mock(ProspectStatsModel);
+    const service = new ProspectStatsService(prospectStatsModel);
+
+    const prospect = prospectsMock.mockPassingStats.stats;
+    const relateds = [{ ...prospectsMock.mockPassingStats, stats: prospectsMock.passingStatsNotRelated }]
+    const result = service.findRelateds(prospect, relateds);
+
+    expect(result.length).to.eql(0);
+  })
+
+  it("Should accumulateStats not return any prospect", () => {
+    const prospectStatsModel = sinon.mock(ProspectStatsModel);
+    const service = new ProspectStatsService(prospectStatsModel);
+
+    const stats: PassingStats[] = [prospectsMock.passingStatsNotRelated, prospectsMock.passingStatsNotRelated]
+    const result = service.accumulateStats(stats);
+
+    expect(result.touchdowns).to.eql(stats.reduce((prev, next) => prev + next.touchdowns, 0));
+  })
 })

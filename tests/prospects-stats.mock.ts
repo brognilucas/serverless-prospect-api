@@ -60,6 +60,18 @@ const passingStats: PassingStats = {
 	longest: 300
 }
 
+
+export const passingStatsNotRelated: PassingStats = {
+	attempts: 0,
+	completions: 1,
+	interceptions: 2,
+	rating: 3,
+	average: 4,
+	touchdowns: 5,
+	yards: 7,
+	longest: 8
+}
+
 export const mockPassingStats: ProspectStats = {
 	prospect: 'randomstring',
 	year: 2019,
