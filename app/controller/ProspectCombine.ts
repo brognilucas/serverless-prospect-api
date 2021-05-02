@@ -34,7 +34,7 @@ export class ProspectCombineController extends ProspectCombineService {
     }
   }
 
-  async listCombineData(event: IEvent) {
+  async listCombineDataByProspect(event: IEvent) {
     const { id } = event.pathParameters;
 
     const prospectService = new ProspectService(prospectModel);
@@ -44,9 +44,16 @@ export class ProspectCombineController extends ProspectCombineService {
 
     const combineData = await this.findByProspect(id);
 
-    if (!combineData) return MessageUtil.error(404,  `Combine data not found to ${prospect.name}`); 
+    if (!combineData) return MessageUtil.error(404, `Combine data not found to ${prospect.name}`);
 
     return MessageUtil.success(combineData)
+  }
+
+  async listCombineData(event: IEvent) {
+    const query = event.queryStringParameters || {};
+    const combineData = await this.find(query)
+
+    return MessageUtil.success(combineData);
   }
 
 }

@@ -1,6 +1,6 @@
 import lambdaTester from "lambda-tester";
 import { expect } from "chai";
-import { findCombineData, compareProspectCombineInfo } from "../app/handler";
+import { findCombineData, createProspectCombineInfo } from "../app/handler";
 import * as prospectsMock from "./prospects-stats.mock";
 import { prospect as ProspectModel } from "../app/model/prospects";
 import { prospectCombine as ProspectCombine } from "../app/model";
@@ -19,7 +19,7 @@ describe("Create Prospect Combine [POST]", () => {
         prospectModel.expects("findOne").chain('exec').atLeast(1).atMost(1).resolves(prospectsMock.defensiveProspect);
         prospectStatsModel.expects("create").resolves(combineMock);
 
-        return lambdaTester(compareProspectCombineInfo)
+        return lambdaTester(createProspectCombineInfo)
             .event({
                 pathParameters: { id: prospectsMock.defensiveProspect.id },
                 body: JSON.stringify({
@@ -44,7 +44,7 @@ describe("Create Prospect Combine [POST]", () => {
         prospectModel.expects("findOne").chain('exec').atLeast(1).atMost(1).resolves(null);
         prospectStatsModel.expects("create").resolves(combineMock);
 
-        return lambdaTester(compareProspectCombineInfo)
+        return lambdaTester(createProspectCombineInfo)
             .event({
                 pathParameters: { id: prospectsMock.defensiveProspect.id },
                 body: JSON.stringify({

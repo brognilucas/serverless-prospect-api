@@ -94,17 +94,24 @@ functions:
           path: prospects/{id}/relateds
           method: get
 
-  compareProspectCombineInfo: 
-    handler: app/handler.compareProspectCombineInfo
+  createProspectCombineInfo: 
+    handler: app/handler.createProspectCombineInfo
     events:
       - http:
           path: prospects/{id}/combine
           method: post
 
-  listCombineData: 
-    handler: app/handler.findCombineData
+  findCombineDataByProspect: 
+    handler: app/handler.findCombineDataByProspect
     events:
       - http:
           path: prospects/{id}/combine
+          method: get
+  
+  findCombineData: 
+    handler: app/handler.findCombineData
+    events:
+      - http:
+          path: prospects/combine
           method: get
 

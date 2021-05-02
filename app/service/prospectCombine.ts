@@ -12,6 +12,10 @@ export class ProspectCombineService {
         return this.combineProspectModel.create(combine);
     }
 
+    protected async find(query: unknown): Promise<Combine[]> {
+        return this.combineProspectModel.find(query);
+    }
+
     protected async findByProspect(prospect: string): Promise<Combine> {
         return this.combineProspectModel.findOne({ prospect });
     }

@@ -41,6 +41,8 @@ export const findStatsByProspect: Handler = (event: IEvent) => prospectStats.fin
 
 export const compareProspectsByStats: Handler = (event: IEvent) => prospectStats.findRelatedProspects(event);
 
-export const compareProspectCombineInfo: Handler = (event: IEvent) => prospectCombineController.createController(event);
+export const createProspectCombineInfo: Handler = (event: IEvent) => prospectCombineController.createController(event);
+
+export const findCombineDataByProspect: Handler = (event: IEvent) => prospectCombineController.listCombineDataByProspect(event);
 
 export const findCombineData: Handler = (event: IEvent) => prospectCombineController.listCombineData(event);
