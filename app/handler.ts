@@ -11,13 +11,15 @@ dotenv.config({
   path: dotenvPath,
 });
 
-import { prospect, prospectStats as prospectStatsModel } from "./model";
+import { prospect, prospectStats as prospectStatsModel, prospectCombine } from "./model";
 import { ProspectController } from "./controller/prospects";
 import { ProspectStatsController } from './controller/ProspectStats'
+import { ProspectCombineController } from './controller/ProspectCombine'
 import { IEvent } from "./model/dto/IEvent";
 
 const prospectController = new ProspectController(prospect);
 const prospectStats = new ProspectStatsController(prospectStatsModel);
+const prospectCombineController = new ProspectCombineController(prospectCombine);
 
 export const create: Handler = (event: IEvent) => prospectController.create(event);
 
@@ -25,7 +27,7 @@ export const update: Handler = (event: IEvent) => prospectController.update(even
 
 export const find: Handler = () => prospectController.find();
 
-export const findOne: Handler = (event: IEvent) => prospectController.findOne(event); 
+export const findOne: Handler = (event: IEvent) => prospectController.findOne(event);
 
 export const deleteOne: Handler = (event: IEvent) => prospectController.deleteOne(event);
 
@@ -39,3 +41,6 @@ export const findStatsByProspect: Handler = (event: IEvent) => prospectStats.fin
 
 export const compareProspectsByStats: Handler = (event: IEvent) => prospectStats.findRelatedProspects(event);
 
+export const compareProspectCombineInfo: Handler = (event: IEvent) => prospectCombineController.createController(event);
+
+export const findCombineData: Handler = (event: IEvent) => prospectCombineController.listCombineData(event);
