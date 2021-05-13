@@ -1,6 +1,6 @@
 import lambdaTester from "lambda-tester";
 import { expect } from "chai";
-import { findCombineData, createProspectCombineInfo } from "../app/handler";
+import { findCombineData, createProspectCombineInfo, findCombineDataByProspect } from "../app/handler";
 import * as prospectsMock from "./prospects-stats.mock";
 import { prospect as ProspectModel } from "../app/model/prospects";
 import { prospectCombine as ProspectCombine } from "../app/model";
@@ -11,115 +11,125 @@ require('sinon-mongoose');
 
 
 describe("Create Prospect Combine [POST]", () => {
-    it("success", () => {
+  const prospectModel = sinon.mock(ProspectModel)
+  const prospectStatsModel = sinon.mock(ProspectCombine)
 
-        const prospectModel = sinon.mock(ProspectModel)
-        const prospectStatsModel = sinon.mock(ProspectCombine)
+  it("success", () => {
+    prospectModel.expects("findOne").chain('exec').atLeast(1).atMost(1).resolves(prospectsMock.defensiveProspect);
+    prospectStatsModel.expects("create").resolves(combineMock);
 
-        prospectModel.expects("findOne").chain('exec').atLeast(1).atMost(1).resolves(prospectsMock.defensiveProspect);
-        prospectStatsModel.expects("create").resolves(combineMock);
+    return lambdaTester(createProspectCombineInfo)
+      .event({
+        pathParameters: { id: prospectsMock.defensiveProspect.id },
+        body: JSON.stringify({
+          ...combineMock,
+        }),
+      })
+      .expectResult((result: any) => {
+        const body = JSON.parse(result.body);
+        expect(body.message).to.eql('success')
+        expect(result.statusCode).to.equal(200);
+        expect(body.data).to.have.property('fortyYardsDash');
+        prospectStatsModel.restore();
+        prospectModel.restore();
+      });
+  });
 
-        return lambdaTester(createProspectCombineInfo)
-            .event({
-                pathParameters: { id: prospectsMock.defensiveProspect.id },
-                body: JSON.stringify({
-                    ...combineMock,
-                }),
-            })
-            .expectResult((result: any) => {
-                const body = JSON.parse(result.body);
-                expect(body.message).to.eql('success')
-                expect(result.statusCode).to.equal(200);
-                expect(body.data).to.have.property('fortyYardsDash');
-                prospectStatsModel.restore();
-                prospectModel.restore();
-            });
-    });
+  it("failure - prospect not found", () => {
 
-    it("failure - prospect not found", () => {
+    const prospectModel = sinon.mock(ProspectModel)
+    const prospectStatsModel = sinon.mock(ProspectCombine)
 
-        const prospectModel = sinon.mock(ProspectModel)
-        const prospectStatsModel = sinon.mock(ProspectCombine)
+    prospectModel.expects("findOne").chain('exec').atLeast(1).atMost(1).resolves(null);
+    prospectStatsModel.expects("create").resolves(combineMock);
 
-        prospectModel.expects("findOne").chain('exec').atLeast(1).atMost(1).resolves(null);
-        prospectStatsModel.expects("create").resolves(combineMock);
+    return lambdaTester(createProspectCombineInfo)
+      .event({
+        pathParameters: { id: prospectsMock.defensiveProspect.id },
+        body: JSON.stringify({
+          ...combineMock,
+        }),
+      })
+      .expectResult((result: any) => {
+        const body = JSON.parse(result.body);
+        expect(body.message).to.eql('Prospect not found')
+        expect(result.statusCode).to.equal(404);
+        prospectStatsModel.restore();
+        prospectModel.restore();
+      });
+  });
 
-        return lambdaTester(createProspectCombineInfo)
-            .event({
-                pathParameters: { id: prospectsMock.defensiveProspect.id },
-                body: JSON.stringify({
-                    ...combineMock,
-                }),
-            })
-            .expectResult((result: any) => {
-                const body = JSON.parse(result.body);
-                expect(body.message).to.eql('Prospect not found')
-                expect(result.statusCode).to.equal(404);
-                prospectStatsModel.restore();
-                prospectModel.restore();
-            });
-    });
+
+  after(() => {
+    prospectStatsModel.restore();
+    prospectModel.restore();
+  })
 });
 
 describe("Get Prospect Combine Data [GET]", () => {
-    it("success", () => {
 
-        const prospectModel = sinon.mock(ProspectModel)
-        const prospectStatsModel = sinon.mock(ProspectCombine)
+  const prospectModel = sinon.mock(ProspectModel)
+  const prospectCombine = sinon.mock(ProspectCombine)
 
-        prospectModel.expects("findOne").chain('exec').atLeast(1).atMost(1).resolves(prospectsMock.defensiveProspect);
-        prospectStatsModel.expects("findOne").resolves(combineMock);
 
-        return lambdaTester(findCombineData)
-            .event({
-                pathParameters: { id: prospectsMock.defensiveProspect.id },
-            })
-            .expectResult((result: any) => {
-                const body = JSON.parse(result.body);
-                expect(body.message).to.eql('success')
-                expect(result.statusCode).to.equal(200);
-                expect(body.data).to.have.property('fortyYardsDash');
-                prospectStatsModel.restore();
-                prospectModel.restore();
-            });
-    });
+  beforeEach(() => {
+    prospectModel.restore(); 
+    prospectCombine.restore();
+  })
 
-    it("failure - prospect not found", () => {
+  it("success", () => {
+    prospectCombine.expects("find").resolves([combineMock]);
 
-        const prospectModel = sinon.mock(ProspectModel)
-        const prospectStatsModel = sinon.mock(ProspectCombine)
+    return lambdaTester(findCombineData)
+      .event({
+        queryStringParameters: {},
+      })
+      .expectResult((result: any) => {
+        const body = JSON.parse(result.body);
+        expect(body.message).to.eql('success')
+        expect(result.statusCode).to.equal(200);
+        expect(body.data[0]).to.have.property('fortyYardsDash');
+        prospectCombine.restore();
+        prospectModel.restore();
+      });
+  });
 
-        prospectModel.expects("findOne").chain('exec').atLeast(1).atMost(1).resolves(null);
-        return lambdaTester(findCombineData)
-            .event({
-                pathParameters: { id: prospectsMock.defensiveProspect.id },
-            })
-            .expectResult((result: any) => {
-                const body = JSON.parse(result.body);
-                expect(body.message).to.eql('Prospect not found')
-                expect(result.statusCode).to.equal(404);
-                prospectStatsModel.restore();
-                prospectModel.restore();
-            });
-    });
+  it("failure - prospect not found", () => {
+    prospectModel.expects("findOne").chain('exec').resolves(null);
 
-    it("failure - data combine not found to prospect", () => {
+    return lambdaTester(findCombineDataByProspect)
+      .event({
+        pathParameters: { id: prospectsMock.defensiveProspect.id },
+      })
+      .expectResult((result: any) => {
+        const body = JSON.parse(result.body);
+        expect(body.message).to.eql('Prospect not found')
+        expect(result.statusCode).to.equal(404);
+        prospectCombine.restore();
+        prospectModel.restore();
+      });
+  });
 
-        const prospectModel = sinon.mock(ProspectModel)
-        const prospectStatsModel = sinon.mock(ProspectCombine)
+  it("failure - data combine not found to prospect", () => {
+  
+    prospectModel.expects("findOne").chain('exec').resolves(prospectsMock.defensiveProspect);
+    prospectCombine.expects("findOne").resolves(null);
 
-        prospectModel.expects("findOne").chain('exec').atLeast(1).atMost(1).resolves(prospectsMock.defensiveProspect);
-        return lambdaTester(findCombineData)
-            .event({
-                pathParameters: { id: prospectsMock.defensiveProspect.id },
-            })
-            .expectResult((result: any) => {
-                const body = JSON.parse(result.body);
-                expect(body.message).to.eql(`Combine data not found to ${prospectsMock.defensiveProspect.name}`)
-                expect(result.statusCode).to.equal(404);
-                prospectStatsModel.restore();
-                prospectModel.restore();
-            });
-    });
+    return lambdaTester(findCombineDataByProspect)
+      .event({
+        pathParameters: { id: prospectsMock.defensiveProspect.id },
+      })
+      .expectResult((result: any) => {
+        expect(result.statusCode).to.equal(404);
+        prospectCombine.restore();
+        prospectModel.restore();
+      });
+  });
+
+
+  after(() => {
+    prospectCombine.restore();
+    prospectModel.restore();
+  })
 
 });
