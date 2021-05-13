@@ -1,15 +1,15 @@
 import { ProspectDTO } from "./ProspectDTO";
 
-export interface ProspectsEvaluation {
+export class ProspectsEvaluation {
     propsect: ProspectDTO['id']; 
     evaluation: QuarterbackEvaluation | RunningBackEvaluation;
 }
 
-interface GeneralAspects {
+class GeneralAspects {
     athleticism: number;
 }
 
-export interface RunningBackEvaluation extends GeneralAspects {
+export class RunningBackEvaluation extends GeneralAspects {
     vision: number;
     footwork: number;
     explosion: number;
@@ -21,7 +21,7 @@ export interface RunningBackEvaluation extends GeneralAspects {
     bigPlayHability: number;
 }
 
-export interface QuarterbackEvaluation extends GeneralAspects {
+export class QuarterbackEvaluation extends GeneralAspects {
     accuracy: number; 
     decistionMaking: number; 
     poise: number;
@@ -32,4 +32,75 @@ export interface QuarterbackEvaluation extends GeneralAspects {
     mobility: number;
     leadership: number;
     throwingMechanics: number;
+    footballIQ: number;
+}
+
+export class WideReceiverEvaluation extends GeneralAspects {
+    routeRunning: number; 
+    hands: number;
+    separation: number; 
+    release: number;
+    yardsAfterCatch: number; 
+    bodyControl: number; 
+}
+
+export class TightEndEvaluation extends WideReceiverEvaluation {
+    runBlocking: number; 
+    passBlocking: number;
+    versatility: number;
+}
+
+export class OffensiveLinemenEvaluation extends GeneralAspects {
+    balance: number; 
+    passSet: number;
+    competitiveToughness: number;
+    lateralMobility: number; 
+    handsUsage: number; 
+    powerRun: number;
+    zoneRun: number;
+    anchor: number;
+}
+
+export class InsideDefensiveLinemenEvaluation extends GeneralAspects {
+    firstStep: number; 
+    flexibility: number; 
+    handUsage: number; 
+    handPower: number; 
+    runDefending: number; 
+    motor: number; 
+    passRushMoves: number; 
+    strenght: number;
+}
+
+export class EdgeEvaluation extends InsideDefensiveLinemenEvaluation {
+    constructor(){
+        super();  
+    }
+}
+
+export class LinebackerEvaluation extends GeneralAspects {
+    tackling: number; 
+    runSupport: number;
+    zoneCoverage: number; 
+    manCoverage: number; 
+    footballIQ: number;
+    passRushAbility: number; 
+}
+
+export class SafetyEvaluation extends GeneralAspects {
+    footballIQ: number; 
+    runSupport: number;
+    tackling: number; 
+    zoneCoverage: number; 
+    manCoverage: number;
+    ballSKills: number; 
+}
+
+export class CornerbackEvaluation  extends GeneralAspects {
+    manCoverage: number; 
+    zoneCoverage: number; 
+    ballSkills: number; 
+    tackling: number; 
+    runDefending: number; 
+    finalSpeed: number; 
 }
