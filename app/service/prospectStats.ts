@@ -19,8 +19,8 @@ export class ProspectStatsService {
   protected async find(query: unknown): Promise<ProspectStats[]> {
     return this.prospectsStats.find(query, { _id: 0, __v: 0 }).lean();
   }
-
-  protected async findStatsByProspect(prospectId: string): Promise<ProspectStats> {
+  
+  protected async findStatsByProspect(prospectId: string): Promise<ProspectStats[]> {
     return this.prospectsStats.find({ prospect: prospectId }, { _id: 0, __v: 0 }).lean();
   }
 

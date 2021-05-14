@@ -8,31 +8,31 @@ export class ProspectService {
     this.prospects = prospects;
   }
 
-  public async createProspect(body: ProspectDTO): Promise<ProspectDTO> {
+  public async createProspect(body: ProspectDTO): Promise<ProspectDocument> {
     return this.prospects.create(body);
   }
 
-  public updateById(id: string, data: ProspectDTO): Promise<ProspectDTO> {
+  public updateById(id: string, data: ProspectDTO): Promise<ProspectDocument> {
     return this.prospects.findOneAndUpdate({ id }, { $set: data }, { new: true }).exec();
   }
 
-  public findProspects(): Promise<ProspectDTO[]> {
+  public findProspects(): Promise<ProspectDocument[]> {
     return this.prospects.find({}, { _id: 0 ,  __v: 0}).exec();
   }
 
-  public findById(id: string): Promise<ProspectDTO> {
+  public findById(id: string): Promise<ProspectDocument> {
     return this.prospects.findOne({ id }, { _id: 0 , __v: 0 }).exec();
   }
 
-  public deleteById(id: string): Promise<{ deletedCount: number }> {
+  public deleteById(id: string): Promise<{ deletedCount?: number }> {
     return this.prospects.deleteOne({ id }).exec()
   }
 
-  public disable(id: string): Promise<ProspectDTO> {
+  public disable(id: string): Promise<ProspectDocument> {
     return this.prospects.findOneAndUpdate({ id }, { $set: { active: false } }).exec();
   }
 
-  public enable(id: string): Promise<ProspectDTO> {
+  public enable(id: string): Promise<ProspectDocument> {
     return this.prospects.findOneAndUpdate({ id }, { $set: { active: true } }).exec();
 
   }
