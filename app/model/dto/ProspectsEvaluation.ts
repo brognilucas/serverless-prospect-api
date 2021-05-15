@@ -16,6 +16,14 @@ class GeneralAspects {
     }
 }
 
+function executeCalculation(percentages, object): number {
+    const calculatedValues = Object.keys(percentages).map((key) => {
+        return object[key] * percentages[key];
+    })
+
+    return calculatedValues.reduce((prev, next) => prev + next, 0);
+}
+
 export class RunningBackEvaluation extends GeneralAspects {
     vision: number;
     footwork: number;
@@ -59,19 +67,29 @@ export class RunningBackEvaluation extends GeneralAspects {
             bigPlayHability: 10 / 100
         }
 
-        this.overall = this.ballSecutity * percentages.ballSecutity +
-            this.bigPlayHability * percentages.bigPlayHability +
-            this.contactBalance * percentages.contactBalance +
-            this.elusiviness * percentages.elusiviness +
-            this.explosion * percentages.explosion +
-            this.footwork * percentages.footwork +
-            this.athleticism * percentages.athleticism +
-            this.vision * percentages.vision +
-            this.versatility * percentages.versatility
+        this.overall = executeCalculation(percentages, this);
     }
 }
 
 export class QuarterbackEvaluation extends GeneralAspects {
+
+    constructor(quarterbackEvaluation: QuarterbackEvaluation) {
+        super();
+        this.accuracy = quarterbackEvaluation.accuracy;
+        this.decistionMaking = quarterbackEvaluation.decistionMaking;
+        this.armStrength = quarterbackEvaluation.armStrength;
+        this.progressions = quarterbackEvaluation.progressions;
+        this.poise = quarterbackEvaluation.poise;
+        this.progressions = quarterbackEvaluation.progressions;
+        this.footballIQ = quarterbackEvaluation.footballIQ;
+        this.leadership = quarterbackEvaluation.leadership;
+        this.pocketManipulation = quarterbackEvaluation.pocketManipulation;
+        this.throwingMechanics = quarterbackEvaluation.throwingMechanics;
+        this.athleticism = quarterbackEvaluation.athleticism;
+
+        this.calculateOverall();
+    }
+
     accuracy: number;
     decistionMaking: number;
     poise: number;
@@ -79,10 +97,28 @@ export class QuarterbackEvaluation extends GeneralAspects {
     release: number;
     pocketManipulation: number;
     armStrength: number;
-    mobility: number;
     leadership: number;
     throwingMechanics: number;
     footballIQ: number;
+
+
+    calculateOverall(): void {
+        const percentages = {
+            accuracy: 10 / 100,
+            decistionMaking: 12.5 / 100,
+            armStrength: 10 / 100,
+            progressions: 10 / 100,
+            poise: 7.5 / 100,
+            footballIQ: 15 / 100,
+            leadership: 10 / 100,
+            pocketManipulation: 7.5 / 100,
+            throwingMechanics: 7.5 / 100,
+            athleticism: 10 / 100
+        }
+
+
+        this.overall = executeCalculation(percentages, this);
+    }
 }
 
 export class WideReceiverEvaluation extends GeneralAspects {

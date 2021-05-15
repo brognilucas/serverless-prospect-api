@@ -1,4 +1,4 @@
-import { RunningBackEvaluation } from "../app/model/dto/ProspectsEvaluation";
+import { QuarterbackEvaluation, RunningBackEvaluation } from "../app/model/dto/ProspectsEvaluation";
 
 export const mockRunningBackEvaluation = {
     athleticism: 10, 
@@ -12,7 +12,6 @@ export const mockRunningBackEvaluation = {
     vision: 10
 } as RunningBackEvaluation
 
-
 export const mockRunningBack8585 = {
     athleticism: 8.63, 
     ballSecutity: 7.5, 
@@ -24,3 +23,16 @@ export const mockRunningBack8585 = {
     versatility: 9, 
     vision: 8
 } as RunningBackEvaluation 
+
+export const mockQuaterback = {
+    poise: 10,
+    accuracy: 10,
+    decistionMaking: 10,
+    armStrength: 10,
+    progressions: 10,
+    footballIQ: 10,
+    leadership: 10,
+    pocketManipulation: 10,
+    throwingMechanics: 10,
+    athleticism: 10
+} as QuarterbackEvaluation
