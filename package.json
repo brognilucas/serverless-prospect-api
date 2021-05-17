@@ -17,6 +17,7 @@
     "dotenv": "^8.2.0",
     "mongoose": "^5.9.10",
     "npm": "^7.7.5",
+    "serverless-api-gateway-caching": "^1.7.2",
     "uuid": "^8.3.2"
   },
   "devDependencies": {

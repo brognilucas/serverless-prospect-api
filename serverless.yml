@@ -15,6 +15,12 @@ provider:
 plugins:
   - serverless-plugin-typescript
   - serverless-offline
+  - serverless-api-gateway-caching
+
+custom:
+  apiGatewayCaching:
+    enabled: true
+
 
 package:
   exclude:
@@ -45,12 +51,19 @@ functions:
       - http:
           path: prospects
           method: get
+          caching:
+            enabled: true
+            
   findOne:
     handler: app/handler.findOne
     events:
       - http:
           path: prospects/{id}
           method: get
+          caching:
+            enabled: true
+            cacheKeyParameters:
+              - name: request.path.id
 
   deleteOne:
     handler: app/handler.deleteOne
@@ -79,6 +92,10 @@ functions:
       - http:
           path: prospects/{id}/stats
           method: post
+          caching:
+            enabled: true
+            cacheKeyParameters:
+              - name: request.path.id
 
   findStatsByProspect: 
     handler: app/handler.findStatsByProspect
@@ -86,6 +103,10 @@ functions:
       - http:
           path: prospects/{id}/stats
           method: get
+          caching:
+            enabled: true
+            cacheKeyParameters:
+              - name: request.path.id
 
   compareProspectsByStats: 
     handler: app/handler.compareProspectsByStats
@@ -93,6 +114,10 @@ functions:
       - http:
           path: prospects/{id}/relateds
           method: get
+          caching:
+            enabled: true
+            cacheKeyParameters:
+              - name: request.path.id
 
   createProspectCombineInfo: 
     handler: app/handler.createProspectCombineInfo
@@ -100,13 +125,17 @@ functions:
       - http:
           path: prospects/{id}/combine
           method: post
-
+          
   findCombineDataByProspect: 
     handler: app/handler.findCombineDataByProspect
     events:
       - http:
           path: prospects/{id}/combine
           method: get
+          caching:
+            enabled: true
+            cacheKeyParameters:
+              - name: request.path.id
   
   findCombineData: 
     handler: app/handler.findCombineData
