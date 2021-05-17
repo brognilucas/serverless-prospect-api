@@ -19,7 +19,7 @@ plugins:
 
 custom:
   apiGatewayCaching:
-    enabled: true
+    enabled: false
 
 
 package:
@@ -52,7 +52,7 @@ functions:
           path: prospects
           method: get
           caching:
-            enabled: true
+            enabled: false
             
   findOne:
     handler: app/handler.findOne
@@ -61,7 +61,7 @@ functions:
           path: prospects/{id}
           method: get
           caching:
-            enabled: true
+            enabled: false
             cacheKeyParameters:
               - name: request.path.id
 
@@ -93,7 +93,7 @@ functions:
           path: prospects/{id}/stats
           method: post
           caching:
-            enabled: true
+            enabled: false
             cacheKeyParameters:
               - name: request.path.id
 
@@ -104,7 +104,7 @@ functions:
           path: prospects/{id}/stats
           method: get
           caching:
-            enabled: true
+            enabled: false
             cacheKeyParameters:
               - name: request.path.id
 
@@ -115,7 +115,7 @@ functions:
           path: prospects/{id}/relateds
           method: get
           caching:
-            enabled: true
+            enabled: false
             cacheKeyParameters:
               - name: request.path.id
 
@@ -133,7 +133,7 @@ functions:
           path: prospects/{id}/combine
           method: get
           caching:
-            enabled: true
+            enabled: false
             cacheKeyParameters:
               - name: request.path.id
   
