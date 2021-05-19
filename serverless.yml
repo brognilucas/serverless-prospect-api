@@ -97,6 +97,13 @@ functions:
             cacheKeyParameters:
               - name: request.path.id
 
+  updateStatsProspect: 
+    handler: app/handler.updateStats
+    events: 
+      - http: 
+          path: prospects/{id}/stats
+          method: put
+
   findStatsByProspect: 
     handler: app/handler.findStatsByProspect
     events:

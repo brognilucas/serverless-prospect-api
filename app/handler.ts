@@ -39,6 +39,8 @@ export const createStats: Handler = (event: IEvent) => prospectStats.create(even
 
 export const findStatsByProspect: Handler = (event: IEvent) => prospectStats.findByProspect(event);
 
+export const updateStats: Handler = (event: IEvent) => prospectStats.update(event);
+
 export const compareProspectsByStats: Handler = (event: IEvent) => prospectStats.findRelatedProspects(event);
 
 export const createProspectCombineInfo: Handler = (event: IEvent) => prospectCombineController.createController(event);

@@ -14,6 +14,31 @@ export class ProspectStatsController extends ProspectStatsService {
     super(prospectStats);
   }
 
+
+  async update(event: IEvent) {
+    try {
+      const prospectStats: ProspectStats = {
+        prospect: event.pathParameters.id,
+        ...JSON.parse(event.body)
+      };
+
+      const stats = await this.findStats(prospectStats.prospect, prospectStats.year, prospectStats.type);
+
+      if (!stats){
+        return MessageUtil.error(404, 'Stats not found for key values');        
+      }
+      
+      this.validateStats(null, prospectStats); 
+
+      await this.updateStats(prospectStats); 
+
+      return MessageUtil.successNoContent(); 
+    } catch (err) {
+      return MessageUtil.error(err.code || 400, err.message || err);
+    }
+  }
+
+
   async create(event: IEvent) {
     try {
       const prospectStats: ProspectStats = {
@@ -47,8 +72,6 @@ export class ProspectStatsController extends ProspectStatsService {
   }
 
   validateStats(prevStats: ProspectStats, prospectStats: ProspectStats) {
-
-
     if (prevStats) {
       throw `Prospect already has ${prospectStats.type} stats for ${prospectStats.year}`
     }
@@ -86,7 +109,6 @@ export class ProspectStatsController extends ProspectStatsService {
       throw 'Defensive stats must have tackles, interceptions, sacks and fumbles'
     }
   }
-
 
   async findByProspect(event: IEvent) {
 

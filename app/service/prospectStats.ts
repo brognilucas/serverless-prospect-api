@@ -8,6 +8,10 @@ export class ProspectStatsService {
     this.prospectsStats = prospectsStats;
   }
 
+  protected async updateStats(body: ProspectStats): Promise<ProspectStats> {
+    return this.prospectsStats.findOneAndUpdate({ prospect: body.prospect, year: body.year, type: body.type }, { $set: body }).lean();
+  }
+
   protected async setStats(body: ProspectStats): Promise<ProspectStats> {
     return this.prospectsStats.create(body);
   }
@@ -19,7 +23,7 @@ export class ProspectStatsService {
   protected async find(query: unknown): Promise<ProspectStats[]> {
     return this.prospectsStats.find(query, { _id: 0, __v: 0 }).lean();
   }
-  
+
   protected async findStatsByProspect(prospectId: string): Promise<ProspectStats[]> {
     return this.prospectsStats.find({ prospect: prospectId }, { _id: 0, __v: 0 }).lean();
   }

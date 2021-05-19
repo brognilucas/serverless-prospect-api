@@ -2,8 +2,8 @@ import { ResponseVO } from 'app/utils/model/vo/responseVo';
 
 enum StatusCode {
   success = 200,
-  notFound = 404, 
-  internal = 500, 
+  notFound = 404,
+  internal = 500,
   badRequest = 400
 }
 
@@ -20,7 +20,7 @@ class Result {
     this.data = data;
   }
 
-  bodyToString () {
+  bodyToString() {
     return {
       statusCode: this.statusCode,
       body: JSON.stringify({
@@ -33,6 +33,14 @@ class Result {
 }
 
 export class MessageUtil {
+
+  static successNoContent(): ResponseVO {
+    return {
+      statusCode: 201,
+      body: null
+    };
+  }
+
   static success(data: unknown): ResponseVO {
     const result = new Result(StatusCode.success, 0, 'success', data);
 
@@ -40,8 +48,8 @@ export class MessageUtil {
   }
 
   static error(code: number, message: string): ResponseVO {
-    const httpCode = code === 404 ? StatusCode.notFound : StatusCode.badRequest; 
-    const result = new Result(httpCode, code, message); 
+    const httpCode = code === 404 ? StatusCode.notFound : StatusCode.badRequest;
+    const result = new Result(httpCode, code, message);
 
     return result.bodyToString();
   }

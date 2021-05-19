@@ -1,12 +1,12 @@
 import lambdaTester from "lambda-tester";
 import { expect } from "chai";
-import { createStats, findStatsByProspect, compareProspectsByStats } from "../app/handler";
+import { createStats, findStatsByProspect, compareProspectsByStats, updateStats } from "../app/handler";
 import * as prospectsMock from "./prospects-stats.mock";
 import { prospect as ProspectModel } from "../app/model/prospects";
 import { prospectStats as ProspectStatsModel } from "../app/model/prospect-stats";
 import { ProspectStatsService } from "../app/service/prospectStats";
-import { PassingStats } from "app/model/dto/OffensiveStatsDTO";
-import { ProspectStats } from "app/model/dto/ProspectsStatsDTO";
+import { PassingStats } from "../app/model/dto/OffensiveStatsDTO";
+import { ProspectStats, StatType } from "../app/model/dto/ProspectsStatsDTO";
 const sinon = require('sinon');
 require('sinon-mongoose');
 
@@ -38,6 +38,7 @@ describe("Create Prospect Stats [POST]", () => {
         prospectModel.restore();
       });
   });
+
 
   it("failure - prospect not found", () => {
 
@@ -558,6 +559,52 @@ describe("Get Prospect Stats [GET]", () => {
       });
   });
 });
+
+
+describe("Update Prospect Stats [PUT]", () => {
+  it("success", () => {
+
+    const prospectModel = sinon.mock(ProspectModel)
+    const prospectStatsModel = sinon.mock(ProspectStatsModel)
+
+
+    const updated = {
+      "year": 2019,
+      "type": StatType.defensive,
+      "stats": {
+        "sacks": 5,
+        "tackles": 109,
+        "tacklesForLoss": 14,
+        "passDeflections": 5,
+        "tacklesSolo": 52,
+        "taclesAssistance": 57,
+        "forcedFumbles": 4,
+        "interceptions": 0,
+        "interceptionsYards": 0,
+        "touchdowns": 30,
+        "fumblesRecovered": 1
+      }
+    }
+
+    prospectModel.expects("findOne").chain('exec').atLeast(1).atMost(1).resolves(prospectsMock.defensiveProspect);
+    prospectStatsModel.expects("findOne").chain('exec').resolves(prospectsMock.mockDefensiveStats);
+    prospectStatsModel.expects("findOneAndUpdate").chain('exec').resolves(updated);
+
+    return lambdaTester(updateStats)
+      .event({
+        pathParameters: { id: prospectsMock.defensiveProspect.id },
+        body: JSON.stringify({
+          ...updated,
+        }),
+      })
+      .expectResult((result: any) => {
+        expect(result.statusCode).to.equal(201);
+        prospectStatsModel.restore();
+        prospectModel.restore();
+      });
+  });
+
+})
 
 describe('Get Relateds [GET]', () => {
 
