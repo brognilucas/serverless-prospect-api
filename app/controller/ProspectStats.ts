@@ -23,51 +23,20 @@ export class ProspectStatsController extends ProspectStatsService {
 
       Object.assign(prospectStats, { id: uuid() })
 
-      if (!prospectStats.year) {
-        throw 'Year is required'
-      }
-
-      const defensiveTypes = [StatType.defensive]
-      const offensivetypes = [StatType.passing, StatType.receiving, StatType.rushing];
-
-      const types = [...defensiveTypes, ...offensivetypes];
-
-      if (!prospectStats.type || (!types.includes(prospectStats.type))) {
-        throw 'Invalid type';
-      }
-
       const prospectService = new ProspectService(prospectModel);
-      const prospect = await prospectService.findById(prospectStats.prospect);
+
+      const [prospect, prevStats] = await Promise.all(
+        [
+          prospectService.findById(prospectStats.prospect),
+          this.findStats(prospectStats.prospect, prospectStats.year, prospectStats.type)
+        ]
+      );
 
       if (!prospect) {
         return MessageUtil.error(404, "Prospect not found");
       }
 
-      const prevStats = await this.findStats(prospectStats.prospect, prospectStats.year, prospectStats.type);
-
-      if (prevStats) {
-        throw `Prospect already has ${prospectStats.type} stats for ${prospectStats.year}`
-      }
-
-      if (!prospectStats.stats || !prospectStats.stats) throw 'Missing stats';
-
-      const isOffensive = offensivetypes.includes(prospectStats.type)
-
-      const defensiveRequiredFields = ['tackles', 'interceptions', 'sacks', 'forcedFumbles'];
-      const offensiveRequiredFields = ['yards', 'average', 'longest', 'touchdowns'];
-      const isMissingOffensiveStats = offensiveRequiredFields.filter((key) => ![null, undefined].includes(prospectStats.stats[key])).length !== offensiveRequiredFields.length;
-      const isMissingDefensiveStats = defensiveRequiredFields.filter((key) => ![null, undefined].includes(prospectStats.stats[key])).length !== defensiveRequiredFields.length;
-
-      if (
-        isOffensive &&
-        isMissingOffensiveStats
-      ) {
-        throw 'Offensive stats must have yards, average, longest and touchdowns'
-      }
-
-      if (!isOffensive && isMissingDefensiveStats) {
-        throw 'Defensive stats must have tackles, interceptions, sacks and fumbles'
-      }
+      this.validateStats(prevStats, prospectStats);
 
       const response = await this.setStats(prospectStats);
 
@@ -76,6 +45,48 @@ export class ProspectStatsController extends ProspectStatsService {
       return MessageUtil.error(err.code || 400, err.message || err);
     }
   }
+
+  validateStats(prevStats: ProspectStats, prospectStats: ProspectStats) {
+
+
+    if (prevStats) {
+      throw `Prospect already has ${prospectStats.type} stats for ${prospectStats.year}`
+    }
+
+    if (!prospectStats.year) {
+      throw 'Year is required'
+    }
+
+    const defensiveTypes = [StatType.defensive]
+    const offensivetypes = [StatType.passing, StatType.receiving, StatType.rushing];
+
+    const types = [...defensiveTypes, ...offensivetypes];
+
+    if (!prospectStats.type || (!types.includes(prospectStats.type))) {
+      throw 'Invalid type';
+    }
+
+    if (!prospectStats.stats || !prospectStats.stats) throw 'Missing stats';
+
+    const isOffensive = offensivetypes.includes(prospectStats.type)
+
+    const defensiveRequiredFields = ['tackles', 'interceptions', 'sacks', 'forcedFumbles'];
+    const offensiveRequiredFields = ['yards', 'average', 'longest', 'touchdowns'];
+    const isMissingOffensiveStats = offensiveRequiredFields.filter((key) => ![null, undefined].includes(prospectStats.stats[key])).length !== offensiveRequiredFields.length;
+    const isMissingDefensiveStats = defensiveRequiredFields.filter((key) => ![null, undefined].includes(prospectStats.stats[key])).length !== defensiveRequiredFields.length;
+
+    if (
+      isOffensive &&
+      isMissingOffensiveStats
+    ) {
+      throw 'Offensive stats must have yards, average, longest and touchdowns'
+    }
+
+    if (!isOffensive && isMissingDefensiveStats) {
+      throw 'Defensive stats must have tackles, interceptions, sacks and fumbles'
+    }
+  }
+
 
   async findByProspect(event: IEvent) {
 
