@@ -48,3 +48,7 @@ export const createProspectCombineInfo: Handler = (event: IEvent) => prospectCom
 export const findCombineDataByProspect: Handler = (event: IEvent) => prospectCombineController.listCombineDataByProspect(event);
 
 export const findCombineData: Handler = (event: IEvent) => prospectCombineController.listCombineData(event);
+
+export const updateCombineData: Handler = (event: IEvent) => prospectCombineController.updateController(event);
+
+export const deleteCombineData: Handler = (event: IEvent) => prospectCombineController.deleteController(event);

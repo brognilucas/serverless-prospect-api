@@ -34,9 +34,9 @@ class Result {
 
 export class MessageUtil {
 
-  static successNoContent(): ResponseVO {
+  static successNoContent(statusCode = 204): ResponseVO {
     return {
-      statusCode: 201,
+      statusCode: statusCode,
       body: null
     };
   }

@@ -19,4 +19,12 @@ export class ProspectCombineService {
     protected async findByProspect(prospect: string): Promise<Combine> {
         return this.combineProspectModel.findOne({ prospect });
     }
+
+    protected async update(prospectId: string, combineData: Combine): Promise<Combine> {
+        return this.combineProspectModel.findOneAndUpdate({ prospect: prospectId }, { $set: combineData }).lean();
+    }
+
+    protected async delete(prospect: string): Promise<unknown> {
+        return this.combineProspectModel.deleteOne({ prospect }).lean()
+    }
 }

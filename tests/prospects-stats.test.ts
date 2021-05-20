@@ -598,7 +598,7 @@ describe("Update Prospect Stats [PUT]", () => {
         }),
       })
       .expectResult((result: any) => {
-        expect(result.statusCode).to.equal(201);
+        expect(result.statusCode).to.equal(204);
         prospectStatsModel.restore();
         prospectModel.restore();
       });

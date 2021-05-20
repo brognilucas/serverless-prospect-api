@@ -151,3 +151,17 @@ functions:
           path: prospects/combine
           method: get
 
+  updateCombineData: 
+    handler: app/handler.updateCombineData
+    events:
+      - http:
+          path: prospects/{id}/combine
+          method: put
+  
+  deleteCombineData: 
+    handler: app/handler.deleteCombineData
+    events:
+      - http:
+          path: prospects/{id}/combine
+          method: delete
+
