@@ -1,6 +1,6 @@
 import lambdaTester from "lambda-tester";
 import { expect } from "chai";
-import { findCombineData, createProspectCombineInfo, findCombineDataByProspect } from "../app/handler";
+import { findCombineData, createProspectCombineInfo, findCombineDataByProspect, updateCombineData, deleteCombineData } from "../app/handler";
 import * as prospectsMock from "./prospects-stats.mock";
 import { prospect as ProspectModel } from "../app/model/prospects";
 import { prospectCombine as ProspectCombine } from "../app/model";
@@ -71,9 +71,8 @@ describe("Get Prospect Combine Data [GET]", () => {
   const prospectModel = sinon.mock(ProspectModel)
   const prospectCombine = sinon.mock(ProspectCombine)
 
-
   beforeEach(() => {
-    prospectModel.restore(); 
+    prospectModel.restore();
     prospectCombine.restore();
   })
 
@@ -111,7 +110,7 @@ describe("Get Prospect Combine Data [GET]", () => {
   });
 
   it("failure - data combine not found to prospect", () => {
-  
+
     prospectModel.expects("findOne").chain('exec').resolves(prospectsMock.defensiveProspect);
     prospectCombine.expects("findOne").resolves(null);
 
@@ -133,3 +132,69 @@ describe("Get Prospect Combine Data [GET]", () => {
   })
 
 });
+
+describe("Update Prospect Combine [PUT]", () => {
+  const prospectModel = sinon.mock(ProspectModel)
+  const prospectCombine = sinon.mock(ProspectCombine)
+
+  beforeEach(() => {
+    prospectModel.restore();
+    prospectCombine.restore();
+  })
+
+  it("success", () => {
+    const combineEdited = { ...combineMock, fortyYardsDash: 4.67 }
+
+    prospectCombine.expects("findOne").resolves(combineMock);
+    prospectModel.expects("findOne").chain('exec').resolves(prospectsMock.defensiveProspect);
+    prospectModel.expects("findOneAndUpdate").chain('exec').resolves(combineEdited);
+
+    return lambdaTester(updateCombineData)
+      .event({
+        pathParameters: { id: prospectsMock.defensiveProspect.id },
+        body: JSON.stringify({
+          ...combineEdited,
+        }),
+      })
+      .expectResult((result: any) => {
+        expect(result.statusCode).to.equal(204);
+        prospectCombine.restore();
+        prospectModel.restore();
+      });
+  });
+
+  after(() => {
+    prospectCombine.restore();
+    prospectModel.restore();
+  })
+})
+
+
+describe("Delete Prospect Combine [PUT]", () => {
+  const prospectModel = sinon.mock(ProspectModel)
+  const prospectCombine = sinon.mock(ProspectCombine)
+
+  beforeEach(() => {
+    prospectModel.restore();
+    prospectCombine.restore();
+  })
+
+  it("success", () => {
+    prospectModel.expects("deleteOne").chain('exec').resolves(prospectsMock.defensiveProspect);
+
+    return lambdaTester(deleteCombineData)
+      .event({
+        pathParameters: { id: prospectsMock.defensiveProspect.id },
+      })
+      .expectResult((result: any) => {
+        expect(result.statusCode).to.equal(204);
+        prospectCombine.restore();
+        prospectModel.restore();
+      });
+  });
+
+  after(() => {
+    prospectCombine.restore();
+    prospectModel.restore();
+  })
+})
