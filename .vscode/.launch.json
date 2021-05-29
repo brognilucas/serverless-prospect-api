@@ -1,0 +1,18 @@
+{
+    "version": "0.1.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Program",
+            "runtimeExecutable": "npm",
+            "cwd": "${workspaceRoot}",
+            "runtimeArgs": [
+                "run",
+                "test"
+            ],
+            "port": 3001,
+            "stopOnEntry": true
+        }
+    ]
+}

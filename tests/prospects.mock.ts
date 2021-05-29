@@ -1,5 +1,5 @@
 import { v4 as uuid } from "uuid";
-import { Position } from "../app/model/dto/PositionsEnum";
+import { Position } from "../app/utils/enums/PositionsEnum";
 
 export const findOne = {
   _id: "someId",

@@ -1,4 +1,4 @@
-import { Position } from "./PositionsEnum";
+import { Position } from "../../utils/enums/PositionsEnum";
 
 export class ProspectDTO {
   name: string;
@@ -6,9 +6,9 @@ export class ProspectDTO {
   description: string;
   jerseyNumber: number;
   position: Position
-  college: string; 
-  size: string; 
-  weight: string; 
+  college: string;
+  size: string;
+  weight: string;
   draftYear: number;
   createdAt: Date;
 }

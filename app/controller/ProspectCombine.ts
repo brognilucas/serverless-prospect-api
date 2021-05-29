@@ -41,9 +41,7 @@ export class ProspectCombineController extends ProspectCombineService {
       if (!id) {
         throw 'Must inform the prospect';
       }
-
       const prospectService = new ProspectService(prospectModel);
-
       if (!combineData) return MessageUtil.error(400, 'Missing required fields');
 
       const [prospectData, prospect] = await Promise.all([
@@ -55,14 +53,10 @@ export class ProspectCombineController extends ProspectCombineService {
       if (!prospectData) return MessageUtil.error(404, `Prospect doesn't have combine data`);
 
       Object.assign(combineData, { prospect: id });
-
-
       await this.update(id, combineData);
-
       return MessageUtil.successNoContent();
     } catch (err) {
       return MessageUtil.error(500, err);
-
     }
   }
 
@@ -78,7 +72,6 @@ export class ProspectCombineController extends ProspectCombineService {
       return MessageUtil.successNoContent()
     } catch (err) {
       return MessageUtil.error(500, err);
-
     }
   }
 

@@ -1,0 +1,21 @@
+{
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.tslint": true,
+        "source.fixAll.eslint": true
+    },
+    "files.exclude": {
+        "**/.cache": true,
+        "**/.DS_Store": true,
+        "**/.git": true,
+        "**/.nyc_output": true,
+        "**/.yalam": true,
+        "**/dist": true,
+        "**/node_modules": true,
+        "**/yarn.lock": true,
+        "**/package-lock.json": true,
+        "*.socket": true
+    },
+    "files.insertFinalNewline": true
+}

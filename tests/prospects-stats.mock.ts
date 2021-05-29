@@ -1,5 +1,5 @@
 import { ProspectStats, StatType } from "../app/model/dto/ProspectsStatsDTO";
-import { Position } from "../app/model/dto/PositionsEnum";
+import { Position } from "../app/utils/enums/PositionsEnum";
 import { PassingStats, ReceivingStats } from "app/model/dto/OffensiveStatsDTO";
 
 export const mockDefensiveStats = {

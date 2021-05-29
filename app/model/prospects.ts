@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { Position } from "./dto/PositionsEnum";
+import { Position } from "../utils/enums/PositionsEnum";
 
 export type ProspectDocument = mongoose.Document & {
   name: string;

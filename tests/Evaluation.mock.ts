@@ -1,11 +1,21 @@
-import { CornerbackEvaluation, InsideDefensiveLinemenEvaluation, LinebackerEvaluation, OffensiveLinemenEvaluation, QuarterbackEvaluation, RunningBackEvaluation, SafetyEvaluation, TightEndEvaluation, WideReceiverEvaluation } from "../app/model/dto/ProspectsEvaluation";
+import {
+    CornerbackEvaluation,
+    InsideDefensiveLinemenEvaluation,
+    LinebackerEvaluation,
+    OffensiveLinemenEvaluation,
+    QuarterbackEvaluation,
+    RunningBackEvaluation,
+    SafetyEvaluation,
+    TightEndEvaluation,
+    WideReceiverEvaluation
+} from "../app/model/evaluations/";
 
 export const mockRunningBackEvaluation = {
     athleticism: 10,
     ballSecutity: 10,
     bigPlayHability: 10,
     contactBalance: 10,
-    elusiviness: 10,
+    elusiveness: 10,
     explosion: 10,
     footwork: 10,
     versatility: 10,
@@ -17,7 +27,7 @@ export const mockRunningBack8585 = {
     ballSecutity: 7.5,
     bigPlayHability: 9,
     contactBalance: 9.25,
-    elusiviness: 8.23,
+    elusiveness: 8.23,
     explosion: 8.74,
     footwork: 10,
     versatility: 9,

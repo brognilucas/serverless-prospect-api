@@ -4,7 +4,7 @@ import { MessageUtil } from "../utils/message";
 import { ProspectService } from "../service/prospect";
 import { ProspectDTO } from "../model/dto/ProspectDTO";
 import { v4 as uuid } from "uuid";
-import { Position } from "../model/dto/PositionsEnum";
+import { Position } from "../utils/enums/PositionsEnum";
 import { IEvent } from "app/model/dto/IEvent";
 import { ProspectDocument } from "app/model";
 
