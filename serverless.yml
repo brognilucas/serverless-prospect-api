@@ -165,3 +165,10 @@ functions:
           path: prospects/{id}/combine
           method: delete
 
+  createUser: 
+    handler: app/handler.createUser
+    events:
+      - http:
+          path: users
+          method: post
+

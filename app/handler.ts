@@ -11,15 +11,17 @@ dotenv.config({
   path: dotenvPath,
 });
 
-import { prospect, prospectStats as prospectStatsModel, prospectCombine } from "./model";
+import { prospect, prospectStats as prospectStatsModel, prospectCombine, userModel } from "./model";
 import { ProspectController } from "./controller/prospects";
 import { ProspectStatsController } from './controller/ProspectStats'
 import { ProspectCombineController } from './controller/ProspectCombine'
 import { IEvent } from "./model/dto/IEvent";
+import { UserController } from "./controller/User";
 
 const prospectController = new ProspectController(prospect);
 const prospectStats = new ProspectStatsController(prospectStatsModel);
 const prospectCombineController = new ProspectCombineController(prospectCombine);
+const userController = new UserController(userModel); 
 
 export const create: Handler = (event: IEvent) => prospectController.create(event);
 
@@ -52,3 +54,5 @@ export const findCombineData: Handler = (event: IEvent) => prospectCombineContro
 export const updateCombineData: Handler = (event: IEvent) => prospectCombineController.updateController(event);
 
 export const deleteCombineData: Handler = (event: IEvent) => prospectCombineController.deleteController(event);
+
+export const createUser: Handler = (event: IEvent) => userController.createController(event);
