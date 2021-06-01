@@ -16,6 +16,9 @@ export class UserService {
     username: string,
     email: string
   ): Promise<LeanDocument<UserDocument>> {
-    return this.userModel.findOne({ username, email }).lean().exec();
+    return this.userModel
+      .findOne({ $or: [{ username }, { email }] })
+      .lean()
+      .exec();
   }
 }

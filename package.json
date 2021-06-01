@@ -16,6 +16,7 @@
   "dependencies": {
     "bcrypt": "^5.0.1",
     "dotenv": "^8.2.0",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.10",
     "npm": "^7.7.5",
     "serverless-api-gateway-caching": "^1.7.2",

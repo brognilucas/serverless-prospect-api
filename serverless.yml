@@ -11,6 +11,7 @@ provider:
     PROSPECT_STATS_COLLECTIONS: prospectsStats
     DB_NAME: prospects
     DB_URL: mongodb+srv://prospects:any@lucasbrogni.zch9p.mongodb.net
+    JWT_SECRET: +QueSecreto
 
 plugins:
   - serverless-plugin-typescript
@@ -39,6 +40,8 @@ functions:
       - http:
           path: prospects
           method: post
+          authorizer: authorizerFunc # execute this before posts.create!
+  
   update:
     handler: app/handler.update
     events:
@@ -171,4 +174,14 @@ functions:
       - http:
           path: users
           method: post
+
+  login: 
+    handler: app/handler.login
+    events:
+      - http:
+          path: login
+          method: post
+
+  authorizerFunc:
+    handler: app/handler.authorizerFunc
 

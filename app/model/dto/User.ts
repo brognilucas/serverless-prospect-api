@@ -1,49 +1,51 @@
+import bcrypt from "bcrypt";
 
-import bcrypt from 'bcrypt'; 
+interface IUser {
+  username: string;
 
+  password: string;
 
-interface IUser{
+  name: string;
 
-	username: string; 
+  email: string;
 
-	password: string; 
+  userType: "administrator" | "default";
 
-	name: string; 
-
-	email: string;
-
-	userType: 'administrator' | 'default' ;
-
-	encryptPassword(password: string): void;
-
-	confirmPassword(string): Promise<boolean>
+  encryptPassword(password: string): void;
 }
 
 export class User implements IUser {
-	
-	constructor(user:IUser){
-		this.username = user.username; 
-		this.encryptPassword(user.password); 
-		this.email = user.email; 
-		this.userType = 'default'; 
-	}
+  constructor(user: IUser) {
+    this.username = user.username;
+    this.encryptPassword(user.password);
+    this.email = user.email;
+    this.userType = "default";
+  }
 
-	username: string; 
+  username: string;
 
-	password: string; 
+  password: string;
 
-	name: string; 
+  name: string;
 
-	email: string;
+  email: string;
 
-	userType: 'administrator' | 'default' = 'default';
+  userType: "administrator" | "default" = "default";
 
-	encryptPassword(password: string): void {
-		this.password = bcrypt.hashSync(password, 10);
-	}
+  encryptPassword(password: string): void {
+    this.password = bcrypt.hashSync(password, 10);
+  }
 
-	async confirmPassword(password: string): Promise<boolean>{
-		return bcrypt.compare(password, this.password)
-	}
+  static async confirmPassword(
+    password: string,
+    encrypted: string
+  ): Promise<boolean> {
+    return bcrypt.compare(password, encrypted);
+  }
 
+  static generateUserDTO(user: User): User {
+    delete user["password"];
+
+    return user;
+  }
 }
