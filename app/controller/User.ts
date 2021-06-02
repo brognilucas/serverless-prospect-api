@@ -36,10 +36,7 @@ export class UserController extends UserService {
   async loginController(event: IEvent): Promise<ResponseVO> {
     const { username, email, password } = JSON.parse(event.body);
 
-    const dbUser = (await this.findUserByMailOrUsername(
-      username,
-      email
-    )) as User;
+    const dbUser = await this.findUserByMailOrUsername(username, email);
 
     if (!dbUser) {
       return MessageUtil.error(404, "User not found");

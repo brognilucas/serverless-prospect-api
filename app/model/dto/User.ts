@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt";
+import { UserDTO } from "./UserDTO";
 
 interface IUser {
   username: string;
@@ -43,7 +44,7 @@ export class User implements IUser {
     return bcrypt.compare(password, encrypted);
   }
 
-  static generateUserDTO(user: User): User {
+  static generateUserDTO(user: UserDTO): UserDTO {
     delete user["password"];
 
     return user;
