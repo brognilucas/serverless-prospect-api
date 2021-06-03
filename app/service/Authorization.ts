@@ -5,19 +5,24 @@ interface JWTPayload {
   userType: string;
 }
 
+interface AWSAuth {
+  Action: string;
+  Effect: string;
+  Resource: string;
+}
+
 interface LambdaAuth {
   principalId: string;
 
   policyDocument: {
-    Version: "2012-10-17";
-    Statement: [
-      {
-        Action: "execute-api:Invoke";
-        Effect: "Allow";
-        Resource: "*";
-      }
-    ];
+    Version: string;
+    Statement: AWSAuth[];
   };
+}
+
+interface RequestContext {
+  httpMethod: "POST";
+  resourcePath: "/prospects";
 }
 
 export class Authorization {
@@ -27,13 +32,25 @@ export class Authorization {
     return token;
   }
 
+  static requiresAdministrator(requestContext: RequestContext): boolean {
+    return (
+      ["PUT", "POST", "DELETE"].includes(requestContext.httpMethod) &&
+      !requestContext.resourcePath.includes("evaluations")
+    );
+  }
+
   static async validateToken({
     authorizationToken,
+    requestContext,
   }: {
     authorizationToken: string;
+    requestContext: RequestContext;
   }): Promise<LambdaAuth> {
-    const bearerToken = authorizationToken.split(" ");
+    if (!authorizationToken) {
+      throw "Token not informed";
+    }
 
+    const bearerToken = authorizationToken.split(" ");
     if (bearerToken[0] !== "Bearer" || !bearerToken[1]) {
       throw "Malformed token";
     }
@@ -45,6 +62,13 @@ export class Authorization {
       process.env.JWT_SECRET
     )) as JWTPayload;
 
+    const effectAdministratorUsage =
+      decoded.userType === "administrator" ? "Allow" : "Deny";
+
+    const effect = Authorization.requiresAdministrator(requestContext)
+      ? effectAdministratorUsage
+      : "Allow";
+
     return {
       principalId: decoded.username,
       policyDocument: {
@@ -52,7 +76,7 @@ export class Authorization {
         Statement: [
           {
             Action: "execute-api:Invoke",
-            Effect: "Allow",
+            Effect: effect,
             Resource: "*",
           },
         ],

@@ -15,23 +15,15 @@ interface IUser {
   encryptPassword(password: string): void;
 }
 
-export class User implements IUser {
+export class User extends UserDTO implements IUser {
   constructor(user: IUser) {
+    super();
+
     this.username = user.username;
     this.encryptPassword(user.password);
     this.email = user.email;
     this.userType = "default";
   }
-
-  username: string;
-
-  password: string;
-
-  name: string;
-
-  email: string;
-
-  userType: "administrator" | "default" = "default";
 
   encryptPassword(password: string): void {
     this.password = bcrypt.hashSync(password, 10);

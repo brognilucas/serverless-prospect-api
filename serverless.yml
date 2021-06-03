@@ -40,7 +40,7 @@ functions:
       - http:
           path: prospects
           method: post
-          authorizer: authorizerFunc # execute this before posts.create!
+          authorizer: authorizerFunc 
   
   update:
     handler: app/handler.update
@@ -74,6 +74,7 @@ functions:
       - http:
           path: prospects/{id}
           method: delete
+          authorizer: authorizerFunc
 
   disable: 
     handler: app/handler.disable
@@ -81,6 +82,7 @@ functions:
       - http:
           path: prospects/{id}/disable
           method: put
+          authorizer: authorizerFunc
   
   enable: 
     handler: app/handler.enable
@@ -88,6 +90,7 @@ functions:
       - http:
           path: prospects/{id}/enable
           method: put
+          authorizer: authorizerFunc
 
   createStatsProspects: 
     handler: app/handler.createStats
@@ -99,6 +102,7 @@ functions:
             enabled: false
             cacheKeyParameters:
               - name: request.path.id
+          authorizer: authorizerFunc
 
   updateStatsProspect: 
     handler: app/handler.updateStats
@@ -106,6 +110,7 @@ functions:
       - http: 
           path: prospects/{id}/stats
           method: put
+          authorizer: authorizerFunc
 
   findStatsByProspect: 
     handler: app/handler.findStatsByProspect
@@ -135,6 +140,7 @@ functions:
       - http:
           path: prospects/{id}/combine
           method: post
+          authorizer: authorizerFunc
           
   findCombineDataByProspect: 
     handler: app/handler.findCombineDataByProspect
@@ -160,6 +166,7 @@ functions:
       - http:
           path: prospects/{id}/combine
           method: put
+          authorizer: authorizerFunc
   
   deleteCombineData: 
     handler: app/handler.deleteCombineData
@@ -167,6 +174,7 @@ functions:
       - http:
           path: prospects/{id}/combine
           method: delete
+          authorizer: authorizerFunc
 
   createUser: 
     handler: app/handler.createUser
