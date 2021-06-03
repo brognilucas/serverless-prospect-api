@@ -86,4 +86,8 @@ export const login: Handler = (event: IEvent) =>
 
 export const authorizerFunc: Handler = (event: {
   authorizationToken: string;
+  requestContext;
 }) => Authorization.validateToken(event);
+
+export const makeAdm: Handler = (event) =>
+  userController.makeAdministrator(event);

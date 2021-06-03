@@ -21,4 +21,17 @@ export class UserService {
       .lean()
       .exec();
   }
+
+  async makeUserAdm(
+    username: string,
+    email: string
+  ): Promise<LeanDocument<UserDocument>> {
+    return this.userModel
+      .findOneAndUpdate(
+        { $or: [{ username }, { email }] },
+        { $set: { userType: "administrator" } }
+      )
+      .lean()
+      .exec();
+  }
 }

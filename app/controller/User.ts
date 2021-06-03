@@ -61,4 +61,22 @@ export class UserController extends UserService {
       user: User.generateUserDTO(dbUser),
     });
   }
+
+  async makeAdministrator(event: IEvent): Promise<MessageUtil> {
+    const { username, email, secret } = JSON.parse(event.body);
+
+    const dbUser = await this.findUserByMailOrUsername(username, email);
+
+    if (!dbUser) {
+      return MessageUtil.error(404, "User not found");
+    }
+
+    if (!secret || secret !== process.env.SECRET_ADM_MAKER) {
+      return MessageUtil.error(500, "Invalid secret key");
+    }
+
+    await this.makeUserAdm(username, email);
+
+    return MessageUtil.successNoContent();
+  }
 }

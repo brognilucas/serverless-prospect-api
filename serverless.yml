@@ -12,6 +12,7 @@ provider:
     DB_NAME: prospects
     DB_URL: mongodb+srv://prospects:any@lucasbrogni.zch9p.mongodb.net
     JWT_SECRET: +QueSecreto
+    SECRET_ADM_MAKER: JamalAdams#Prez
 
 plugins:
   - serverless-plugin-typescript
@@ -188,6 +189,13 @@ functions:
     events:
       - http:
           path: login
+          method: post
+  
+  makeUserAdm: 
+    handler: app/handler.makeAdm
+    events:
+      - http:
+          path: users/makeAdm
           method: post
 
   authorizerFunc:
