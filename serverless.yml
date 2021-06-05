@@ -184,6 +184,15 @@ functions:
           path: users
           method: post
 
+  evaluateProspect: 
+    handler: app/handler.evaluateProspect
+    events:
+      - http:
+          path: prospects/{id}/evaluate
+          method: post
+          authorizer: authorizerFunc
+
+
   login: 
     handler: app/handler.login
     events:
@@ -197,6 +206,7 @@ functions:
       - http:
           path: users/makeAdm
           method: post
+
 
   authorizerFunc:
     handler: app/handler.authorizerFunc

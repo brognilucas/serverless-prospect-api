@@ -16,6 +16,7 @@ import {
   prospectStats as prospectStatsModel,
   prospectCombine,
   userModel,
+  prospectEvaluationModel,
 } from "./model";
 import { ProspectController } from "./controller/prospects";
 import { ProspectStatsController } from "./controller/ProspectStats";
@@ -23,6 +24,7 @@ import { ProspectCombineController } from "./controller/ProspectCombine";
 import { IEvent } from "./model/dto/IEvent";
 import { UserController } from "./controller/User";
 import { Authorization } from "./service/Authorization";
+import { ProspectEvaluationController } from "./controller/ProspectEvaluation";
 
 const prospectController = new ProspectController(prospect);
 const prospectStats = new ProspectStatsController(prospectStatsModel);
@@ -30,6 +32,9 @@ const prospectCombineController = new ProspectCombineController(
   prospectCombine
 );
 const userController = new UserController(userModel);
+const evaluationController = new ProspectEvaluationController(
+  prospectEvaluationModel
+);
 
 export const create: Handler = (event: IEvent) =>
   prospectController.create(event);
@@ -77,6 +82,9 @@ export const updateCombineData: Handler = (event: IEvent) =>
 
 export const deleteCombineData: Handler = (event: IEvent) =>
   prospectCombineController.deleteController(event);
+
+export const evaluateProspect: Handler = (event: IEvent) =>
+  evaluationController.createController(event);
 
 export const createUser: Handler = (event: IEvent) =>
   userController.createController(event);

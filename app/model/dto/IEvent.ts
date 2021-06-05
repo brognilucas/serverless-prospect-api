@@ -1,15 +1,18 @@
 export interface IEvent {
-    body: string;
-    pathParameters: PathParams
-    queryStringParameters: QueryParams
+  body: string;
+  pathParameters: PathParams;
+  queryStringParameters: QueryParams;
+  requestContext: {
+    authorizer: {
+      principalId: string;
+    };
+  };
 }
 
-
 interface QueryParams {
-    statsType?: string
+  statsType?: string;
 }
 
 interface PathParams {
-    id: string
+  id: string;
 }
-

@@ -11,7 +11,7 @@ interface AWSAuth {
   Resource: string;
 }
 
-interface LambdaAuth {
+export interface LambdaAuth {
   principalId: string;
 
   policyDocument: {
