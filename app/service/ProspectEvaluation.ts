@@ -19,7 +19,7 @@ export class ProspectEvaluationService {
     evaluation: ProspectsEvaluation
   ): Promise<ProspectEvaluationDocument> {
     return this.prospectEvaluation
-      .find({ propsect: evaluation.propsect, user: evaluation.user })
+      .findOne({ propsect: evaluation.propsect, user: evaluation.user })
       .lean();
   }
 }
