@@ -11,9 +11,9 @@ const prospectEvaluationSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-prospectEvaluationSchema.index({ username: 1 });
-prospectEvaluationSchema.index({ email: 1 });
-prospectEvaluationSchema.index({ email: 1, username: 1 });
+prospectEvaluationSchema.index({ user: 1 });
+prospectEvaluationSchema.index({ prospect: 1 });
+prospectEvaluationSchema.index({ user: 1, prospect: 1 });
 
 export const prospectEvaluationModel =
   mongoose.models.prospectEvaluation ||
