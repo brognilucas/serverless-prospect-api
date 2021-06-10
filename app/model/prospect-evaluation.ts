@@ -7,7 +7,7 @@ export type ProspectEvaluationDocument = mongoose.Document &
 const prospectEvaluationSchema = new mongoose.Schema({
   user: { type: String },
   evaluation: { type: Object },
-  propsect: { type: String },
+  prospect: { type: String },
   createdAt: { type: Date, default: Date.now },
 });
 

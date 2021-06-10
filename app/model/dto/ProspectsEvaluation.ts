@@ -14,8 +14,8 @@ import { ProspectDTO } from "./ProspectDTO";
 import { User } from "./User";
 
 export class ProspectsEvaluation {
-  propsect: ProspectDTO["id"];
-  evaluation:
+  prospect: ProspectDTO["id"];
+  evaluation?:
     | QuarterbackEvaluation
     | RunningBackEvaluation
     | TightEndEvaluation

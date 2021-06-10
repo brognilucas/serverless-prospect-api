@@ -19,7 +19,13 @@ export class ProspectEvaluationService {
     evaluation: ProspectsEvaluation
   ): Promise<ProspectEvaluationDocument> {
     return this.prospectEvaluation
-      .findOne({ propsect: evaluation.propsect, user: evaluation.user })
+      .findOne({ prospect: evaluation.prospect, user: evaluation.user })
+      .lean();
+  }
+
+  async findEvaluationProspect(prospect: string): Promise<ProspectEvaluationDocument[]> {
+    return this.prospectEvaluation
+      .find({ prospect })
       .lean();
   }
 }

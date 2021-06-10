@@ -86,6 +86,12 @@ export const deleteCombineData: Handler = (event: IEvent) =>
 export const evaluateProspect: Handler = (event: IEvent) =>
   evaluationController.createController(event);
 
+export const findUserProspectEvaluations: Handler = (event: IEvent) =>
+  evaluationController.findEvaluationProspectByUserController(event);
+
+export const findProspectEvaluations: Handler = (event: IEvent) =>
+  evaluationController.findEvaluationsProspectController(event);
+
 export const createUser: Handler = (event: IEvent) =>
   userController.createController(event);
 

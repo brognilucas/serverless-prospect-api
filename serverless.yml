@@ -188,10 +188,24 @@ functions:
     handler: app/handler.evaluateProspect
     events:
       - http:
-          path: prospects/{id}/evaluate
+          path: prospects/{id}/evaluations
           method: post
           authorizer: authorizerFunc
 
+  findUserProspectEvaluations: 
+    handler: app/handler.findUserProspectEvaluations
+    events:
+      - http:
+          path: prospects/{id}/user/evaluations
+          method: get
+          authorizer: authorizerFunc
+  
+  findProspectEvaluations: 
+    handler: app/handler.findProspectEvaluations
+    events:
+      - http:
+          path: prospects/{id}/evaluations
+          method: get
 
   login: 
     handler: app/handler.login

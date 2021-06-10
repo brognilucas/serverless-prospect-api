@@ -25,7 +25,7 @@ export class ProspectEvaluationController extends ProspectEvaluationService {
     if (!prospectResult) return MessageUtil.error(404, "Prospect not found");
 
     const prospectEvaluation: ProspectsEvaluation = {
-      propsect: id,
+      prospect: id,
       evaluation: createEvaluation(prospectResult.position, evaluation),
       user: principalId,
     };
@@ -42,6 +42,37 @@ export class ProspectEvaluationController extends ProspectEvaluationService {
       const result = await this.createEvaluation(prospectEvaluation);
 
       return MessageUtil.success(result);
+    } catch (err) {
+      return MessageUtil.error(500, err);
+    }
+  }
+
+  async findEvaluationProspectByUserController(event: IEvent) {
+    const { id } = event.pathParameters;
+    const { principalId: user } = event.requestContext.authorizer;
+    try {
+      const prospectService = new ProspectService(prospectModel);
+      const prospectResult = await prospectService.findById(id);
+
+      if (!prospectResult) return MessageUtil.error(404, "Prospect not found");
+
+      const evaluations = await this.findEvaluationByProspectAndUser({ prospect: id, user });
+      return MessageUtil.success(evaluations || {});
+    } catch (error) {
+      return MessageUtil.error(500, error);
+    }
+  }
+
+  async findEvaluationsProspectController(event: IEvent) {
+    const { id } = event.pathParameters;
+    try {
+      const prospectService = new ProspectService(prospectModel);
+      const prospectResult = await prospectService.findById(id);
+
+      if (!prospectResult) return MessageUtil.error(404, "Prospect not found");
+
+      const evaluations = await this.findEvaluationProspect(id);
+      return MessageUtil.success(evaluations);
     } catch (err) {
       return MessageUtil.error(500, err);
     }
