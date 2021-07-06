@@ -200,6 +200,14 @@ functions:
           method: get
           authorizer: authorizerFunc
   
+  removeProspectEvaluation: 
+    handler: app/handler.removeProspectEvaluation
+    events:
+      - http:
+          path: prospects/{id}/evaluations
+          method: delete
+          authorizer: authorizerFunc
+  
   findProspectEvaluations: 
     handler: app/handler.findProspectEvaluations
     events:

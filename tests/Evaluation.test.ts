@@ -38,7 +38,6 @@ describe('Unit EvaluationQuarterback', () => {
 })
 
 
-
 describe('Unit EvaluationWideReceiver', () => {
 
   it('It should overall to eql 10', () => {

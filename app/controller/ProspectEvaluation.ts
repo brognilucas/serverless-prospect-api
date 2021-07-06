@@ -77,4 +77,21 @@ export class ProspectEvaluationController extends ProspectEvaluationService {
       return MessageUtil.error(500, err);
     }
   }
+
+  async removeEvaluationProspect(event: IEvent) {
+    const { id } = event.pathParameters;
+    const { principalId: user } = event.requestContext.authorizer;
+
+    try {
+      const prospectService = new ProspectService(prospectModel);
+      const prospectResult = await prospectService.findById(id);
+
+      if (!prospectResult) return MessageUtil.error(404, "Prospect not found");
+
+      await this.removeEvaluation(id, user);
+      return MessageUtil.successNoContent();
+    } catch (err) {
+      return MessageUtil.error(400, err);
+    }
+  }
 }

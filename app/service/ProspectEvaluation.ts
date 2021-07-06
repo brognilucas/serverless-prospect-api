@@ -23,6 +23,12 @@ export class ProspectEvaluationService {
       .lean();
   }
 
+  async removeEvaluation(prospect: string, user: string): Promise<unknown> {
+    return this.prospectEvaluation
+      .deleteOne({ prospect, user })
+      .lean();
+  }
+
   async findEvaluationProspect(prospect: string): Promise<ProspectEvaluationDocument[]> {
     return this.prospectEvaluation
       .find({ prospect })
