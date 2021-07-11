@@ -16,8 +16,8 @@ export class ProspectService {
     return this.prospects.findOneAndUpdate({ id }, { $set: data }, { new: true }).exec();
   }
 
-  public findProspects(): Promise<ProspectDocument[]> {
-    return this.prospects.find({}, { _id: 0 ,  __v: 0}).exec();
+  public findProspects(filter = {}): Promise<ProspectDocument[]> {
+    return this.prospects.find(filter, { _id: 0 ,  __v: 0}).exec();
   }
 
   public findById(id: string): Promise<ProspectDocument> {

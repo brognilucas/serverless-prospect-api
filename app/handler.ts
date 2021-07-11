@@ -40,7 +40,7 @@ export const create: Handler = (event: IEvent) => prospectController.create(even
 
 export const update: Handler = (event: IEvent) => prospectController.update(event);
 
-export const find: Handler = () => prospectController.find();
+export const find: Handler = (event: IEvent) => prospectController.find(event);
 
 export const findOne: Handler = (event: IEvent) => prospectController.findOne(event);
 

@@ -51,9 +51,10 @@ export class ProspectController extends ProspectService {
     }
   }
 
-  async find() {
+  async find(event: IEvent) {
     try {
-      const result = await this.findProspects();
+      const filter = event.queryStringParameters; 
+      const result = await this.findProspects(filter);
 
       return MessageUtil.success(result);
     } catch (err) {
