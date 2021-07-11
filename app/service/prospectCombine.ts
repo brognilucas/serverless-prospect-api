@@ -17,7 +17,7 @@ export class ProspectCombineService {
     }
 
     protected async findByProspect(prospect: string): Promise<Combine> {
-        return this.combineProspectModel.findOne({ prospect });
+        return this.combineProspectModel.findOne({ prospect }).lean();
     }
 
     protected async update(prospectId: string, combineData: Combine): Promise<Combine> {

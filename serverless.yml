@@ -215,6 +215,14 @@ functions:
           path: prospects/{id}/evaluations
           method: get
 
+  updateProspectEvaluation: 
+    handler: app/handler.updateProspectEvaluation
+    events:
+      - http:
+          path: prospects/{id}/evaluations
+          method: patch
+          authorizer: authorizerFunc
+
   login: 
     handler: app/handler.login
     events:

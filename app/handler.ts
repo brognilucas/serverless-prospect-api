@@ -72,6 +72,8 @@ export const evaluateProspect: Handler = (event: IEvent) => evaluationController
 
 export const findUserProspectEvaluations: Handler = (event: IEvent) => evaluationController.findEvaluationProspectByUserController(event);
 
+export const updateProspectEvaluation: Handler = (event: IEvent) => evaluationController.patchUpdateEvaluation(event);
+
 export const findProspectEvaluations: Handler = (event: IEvent) => evaluationController.findEvaluationsProspectController(event);
 
 export const removeProspectEvaluation: Handler = (event: IEvent) => evaluationController.removeEvaluationProspect(event);

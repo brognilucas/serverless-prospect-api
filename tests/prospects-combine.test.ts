@@ -145,8 +145,8 @@ describe("Update Prospect Combine [PUT]", () => {
   it("success", () => {
     const combineEdited = { ...combineMock, fortyYardsDash: 4.67 }
 
-    prospectCombine.expects("findOne").resolves(combineMock);
     prospectModel.expects("findOne").chain('exec').resolves(prospectsMock.defensiveProspect);
+    prospectCombine.expects("findOne").chain('lean').resolves(combineMock);
     prospectModel.expects("findOneAndUpdate").chain('exec').resolves(combineEdited);
 
     return lambdaTester(updateCombineData)

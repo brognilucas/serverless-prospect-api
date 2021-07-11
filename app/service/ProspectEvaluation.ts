@@ -29,6 +29,17 @@ export class ProspectEvaluationService {
       .lean();
   }
 
+  async patchUpdate(prospect: string, user: string, evaluation: ProspectEvaluationDocument['evaluation']): Promise<ProspectEvaluationDocument>{
+    return this.prospectEvaluation
+    .findOneAndUpdate(
+      { prospect, user }, 
+      {$set: {
+        evaluation
+      }}
+      )
+    .lean();
+  }
+
   async findEvaluationProspect(prospect: string): Promise<ProspectEvaluationDocument[]> {
     return this.prospectEvaluation
       .find({ prospect })

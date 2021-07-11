@@ -94,4 +94,34 @@ export class ProspectEvaluationController extends ProspectEvaluationService {
       return MessageUtil.error(400, err);
     }
   }
+
+  async patchUpdateEvaluation(event: IEvent){
+    const { id } = event.pathParameters;
+    const { principalId: user } = event.requestContext.authorizer;
+    const userEvaluation = JSON.parse(event.body);
+    try {
+      if (userEvaluation.overall){
+        throw 'Overall must be calculated';   
+      }
+
+      const prospectService = new ProspectService(prospectModel);
+      const [prospectResult, evaluationUser] = await Promise.all([
+          prospectService.findById(id),
+          this.findEvaluationByProspectAndUser({prospect: id, user})
+        ]);
+
+      if (!prospectResult) return MessageUtil.error(404, "Prospect not found");
+      if (!evaluationUser) return MessageUtil.error(404, "User doesnt have an evaluation for this prospect");
+
+      const evaluation = createEvaluation(prospectResult.position, {
+        ...evaluationUser.evaluation,
+        ...userEvaluation
+      }); 
+      
+      await this.patchUpdate(id, user, evaluation);
+      return MessageUtil.success(evaluation);
+    } catch (err) {
+      return MessageUtil.error(400, err);
+    }
+  }
 }
