@@ -57,6 +57,7 @@ functions:
           method: get
           caching:
             enabled: false
+    provisionedConcurrency: 10
             
   findOne:
     handler: app/handler.findOne
