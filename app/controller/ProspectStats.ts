@@ -16,68 +16,69 @@ export class ProspectStatsController extends ProspectStatsService {
 
 
   async update(event: IEvent) {
-    try {
-      const prospectStats: ProspectStats = {
-        prospect: event.pathParameters.id,
-        ...JSON.parse(event.body)
-      };
+    const prospectStats: ProspectStats = {
+      prospect: event.pathParameters.id,
+      ...JSON.parse(event.body)
+    };
 
-      const stats = await this.findStats(prospectStats.prospect, prospectStats.year, prospectStats.type);
+    const stats = await this.findStats(prospectStats.prospect, prospectStats.year, prospectStats.type);
 
-      if (!stats){
-        return MessageUtil.error(404, 'Stats not found for key values');        
-      }
-      
-      this.validateStats(null, prospectStats); 
-
-      await this.updateStats(prospectStats); 
-
-      return MessageUtil.successNoContent(); 
-    } catch (err) {
-      return MessageUtil.error(err.code || 400, err.message || err);
+    if (!stats) {
+      return MessageUtil.error(404, 'Stats not found for key values');
     }
+
+    const invalidMessage = this.validateStats(null, prospectStats);
+
+    if (invalidMessage) {
+      return invalidMessage
+    }
+
+    await this.updateStats(prospectStats);
+
+    return MessageUtil.successNoContent();
+
   }
 
 
   async create(event: IEvent) {
-    try {
-      const prospectStats: ProspectStats = {
-        prospect: event.pathParameters.id,
-        ...JSON.parse(event.body)
-      };
+    const prospectStats: ProspectStats = {
+      prospect: event.pathParameters.id,
+      ...JSON.parse(event.body)
+    };
 
-      Object.assign(prospectStats, { id: uuid() })
+    Object.assign(prospectStats, { id: uuid() })
+    const prospectService = new ProspectService(prospectModel);
 
-      const prospectService = new ProspectService(prospectModel);
+    const [prospect, prevStats] = await Promise.all(
+      [
+        prospectService.findById(prospectStats.prospect),
+        this.findStats(prospectStats.prospect, prospectStats.year, prospectStats.type)
+      ]
+    );
 
-      const [prospect, prevStats] = await Promise.all(
-        [
-          prospectService.findById(prospectStats.prospect),
-          this.findStats(prospectStats.prospect, prospectStats.year, prospectStats.type)
-        ]
-      );
-
-      if (!prospect) {
-        return MessageUtil.error(404, "Prospect not found");
-      }
-
-      this.validateStats(prevStats, prospectStats);
-
-      const response = await this.setStats(prospectStats);
-
-      return MessageUtil.success(response);
-    } catch (err) {
-      return MessageUtil.error(err.code || 400, err.message || err);
+    if (!prospect) {
+      return MessageUtil.error(404, "Prospect not found");
     }
+
+    const invalidMessage = this.validateStats(prevStats, prospectStats);
+
+    if (invalidMessage) {
+      return invalidMessage
+    }
+
+    const response = await this.setStats(prospectStats);
+
+    return MessageUtil.success(response);
+
   }
 
   validateStats(prevStats: ProspectStats, prospectStats: ProspectStats) {
     if (prevStats) {
-      throw `Prospect already has ${prospectStats.type} stats for ${prospectStats.year}`
+      return MessageUtil.error(400, `Prospect already has ${prospectStats.type} stats for ${prospectStats.year}`)
     }
 
     if (!prospectStats.year) {
-      throw 'Year is required'
+      return MessageUtil.error(400, 'Year is required')
     }
 
     const defensiveTypes = [StatType.defensive]
@@ -86,10 +87,10 @@ export class ProspectStatsController extends ProspectStatsService {
     const types = [...defensiveTypes, ...offensivetypes];
 
     if (!prospectStats.type || (!types.includes(prospectStats.type))) {
-      throw 'Invalid type';
+      return MessageUtil.error(400, 'Invalid type');
     }
 
-    if (!prospectStats.stats || !prospectStats.stats) throw 'Missing stats';
+    if (!prospectStats.stats || !prospectStats.stats) return MessageUtil.error(400, 'Missing stats');
 
     const isOffensive = offensivetypes.includes(prospectStats.type)
 
@@ -102,11 +103,11 @@ export class ProspectStatsController extends ProspectStatsService {
       isOffensive &&
       isMissingOffensiveStats
     ) {
-      throw 'Offensive stats must have yards, average, longest and touchdowns'
+      return MessageUtil.error(400, 'Offensive stats must have yards, average, longest and touchdowns')
     }
 
     if (!isOffensive && isMissingDefensiveStats) {
-      throw 'Defensive stats must have tackles, interceptions, sacks and fumbles'
+      return MessageUtil.error(400, 'Defensive stats must have tackles, interceptions, sacks and fumbles')
     }
   }
 

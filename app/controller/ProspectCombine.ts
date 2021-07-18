@@ -24,55 +24,44 @@ export class ProspectCombineController extends ProspectCombineService {
 
     Object.assign(combineData, { prospect: id });
 
-    try {
-      const result = await this.create(combineData);
+    const result = await this.create(combineData);
 
-      return MessageUtil.success(result)
-    } catch (err) {
-      return MessageUtil.error(500, err);
+    return MessageUtil.success(result)
 
-    }
   }
 
   async updateController(event: IEvent) {
     const { id } = event.pathParameters;
     const combineData: Combine = JSON.parse(event.body);
-    try {
-      if (!id) {
-        throw 'Must inform the prospect';
-      }
-      const prospectService = new ProspectService(prospectModel);
-      if (!combineData) return MessageUtil.error(400, 'Missing required fields');
-
-      const [prospectData, prospect] = await Promise.all([
-        this.findByProspect(id),
-        prospectService.findById(id)
-      ]);
-
-      if (!prospect) return MessageUtil.error(404, `Prospect doesn't exists`);
-      if (!prospectData) return MessageUtil.error(404, `Prospect doesn't have combine data`);
-
-      Object.assign(combineData, { prospect: id });
-      await this.update(id, combineData);
-      return MessageUtil.successNoContent();
-    } catch (err) {
-      return MessageUtil.error(500, err);
+    if (!id) {
+      return MessageUtil.error(400, 'Must inform the prospect');
     }
+    const prospectService = new ProspectService(prospectModel);
+    if (!combineData) return MessageUtil.error(400, 'Missing required fields');
+
+    const [prospectData, prospect] = await Promise.all([
+      this.findByProspect(id),
+      prospectService.findById(id)
+    ]);
+
+    if (!prospect) return MessageUtil.error(404, `Prospect doesn't exists`);
+    if (!prospectData) return MessageUtil.error(404, `Prospect doesn't have combine data`);
+
+    Object.assign(combineData, { prospect: id });
+    await this.update(id, combineData);
+    return MessageUtil.successNoContent();
+
   }
 
   async deleteController(event: IEvent) {
     const { id } = event.pathParameters;
-    try {
-      if (!id) {
-        throw 'Must inform the prospect'; 
-      }
-
-      await this.delete(id);
-
-      return MessageUtil.successNoContent()
-    } catch (err) {
-      return MessageUtil.error(500, err);
+    if (!id) {
+      return MessageUtil.error(400, 'Must inform the prospect');
     }
+
+    await this.delete(id);
+
+    return MessageUtil.successNoContent()
   }
 
   async listCombineDataByProspect(event: IEvent) {

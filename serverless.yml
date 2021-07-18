@@ -5,6 +5,9 @@ service: prospects-api
 provider:
   name: aws
   runtime: nodejs12.x
+  memorySize: 1024 # optional, in MB, default is 1024
+  timeout: 2 # optional, in seconds, default is 6
+  provisionedConcurrency: 10
   environment:
     NODE_ENV: dev
     PROSPECT_COLLECTION: prospects
@@ -57,7 +60,6 @@ functions:
           method: get
           caching:
             enabled: false
-    provisionedConcurrency: 10
             
   findOne:
     handler: app/handler.findOne

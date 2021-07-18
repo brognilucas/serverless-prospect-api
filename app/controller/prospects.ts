@@ -14,110 +14,79 @@ export class ProspectController extends ProspectService {
   }
 
   async create(event: IEvent) {
-    try {
-      const prospect: ProspectDTO = JSON.parse(event.body);
+    const prospect: ProspectDTO = JSON.parse(event.body);
 
-      if (!prospect.name || !prospect.college) {
-        return MessageUtil.error(400, "Must have a name and a college.");
-      }
-
-      prospect.id = uuid();
-
-      if (!Position[prospect.position]) {
-        return MessageUtil.error(400, "Invalid position.");
-      }
-
-      const result = await this.createProspect(prospect);
-
-      return MessageUtil.success(result);
-    } catch (err) {
-      console.error(err);
-
-      return MessageUtil.error(err.code, err.message);
+    if (!prospect.name || !prospect.college) {
+      return MessageUtil.error(400, "Must have a name and a college.");
     }
+
+    prospect.id = uuid();
+
+    if (!Position[prospect.position]) {
+      return MessageUtil.error(400, "Invalid position.");
+    }
+
+    const result = await this.createProspect(prospect);
+
+    return MessageUtil.success(result);
   }
 
   async update(event: IEvent) {
     const { id } = event.pathParameters;
     const body: ProspectDTO = JSON.parse(event.body);
 
-    try {
-      const result = await this.updateById(id, body);
-      return MessageUtil.success(result);
-    } catch (err) {
-      console.error(err);
+    const result = await this.updateById(id, body);
+    return MessageUtil.success(result);
 
-      return MessageUtil.error(err.code, err.message);
-    }
   }
 
   async find(event: IEvent) {
-    try {
-      const filter = event.queryStringParameters; 
-      const result = await this.findProspects(filter);
-
-      return MessageUtil.success(result);
-    } catch (err) {
-      return MessageUtil.error(err.code, err.message);
-    }
+    const filter = event.queryStringParameters;
+    const result = await this.findProspects(filter);
+    return MessageUtil.success(result);
   }
 
   async findOne(event: IEvent) {
     const { id } = event.pathParameters;
 
-    try {
-      const result = await this.findById(id);
+    const result = await this.findById(id);
 
-      return MessageUtil.success(result);
-    } catch (err) {
-      return MessageUtil.error(err.code, err.message);
-    }
+    return MessageUtil.success(result);
   }
 
   async deleteOne(event: IEvent) {
     const { id } = event.pathParameters;
+    const result = await this.deleteById(id);
 
-    try {
-      const result = await this.deleteById(id);
-
-      if (!result || !result.deletedCount) {
-        return MessageUtil.error(404, "Prospect not found!");
-      }
-
-      return MessageUtil.success(result);
-    } catch (err) {
-      return MessageUtil.error(err.code, err.message);
+    if (!result || !result.deletedCount) {
+      return MessageUtil.error(404, "Prospect not found!");
     }
+
+    return MessageUtil.success(result);
+
   }
 
   async disableProspect(event) {
     const { id } = event.pathParameters;
-    try {
-      const result = await this.disable(id);
+    const result = await this.disable(id);
 
-      if (!result) {
-        return MessageUtil.error(404, "Prospect not found!");
-      }
-
-      return MessageUtil.success(result);
-    } catch (err) {
-      return MessageUtil.error(err.code, err.message);
+    if (!result) {
+      return MessageUtil.error(404, "Prospect not found!");
     }
+
+    return MessageUtil.success(result);
+
   }
 
 
   async enableProspect(event) {
     const { id } = event.pathParameters;
-    try {
-      const result = await this.enable(id);
+    const result = await this.enable(id);
 
-      if (!result) {
-        return MessageUtil.error(404, "Prospect not found!");
-      }
-
-      return MessageUtil.success(result);
-    } catch (err) {
-      return MessageUtil.error(err.code, err.message);
+    if (!result) {
+      return MessageUtil.error(404, "Prospect not found!");
     }
+
+    return MessageUtil.success(result);
   }
 }

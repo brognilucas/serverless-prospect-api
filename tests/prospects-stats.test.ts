@@ -69,6 +69,7 @@ describe("Create Prospect Stats [POST]", () => {
     const prospectStatsModel = sinon.mock(ProspectStatsModel)
 
     prospectModel.expects("findOne").chain('exec').resolves(prospectsMock.defensiveProspect);
+    prospectStatsModel.expects("findOne").chain('exec').resolves(null);
 
     return lambdaTester(createStats)
       .event({
@@ -93,6 +94,7 @@ describe("Create Prospect Stats [POST]", () => {
     const prospectStatsModel = sinon.mock(ProspectStatsModel)
 
     prospectModel.expects("findOne").chain('exec').resolves(prospectsMock.defensiveProspect);
+    prospectStatsModel.expects("findOne").chain('exec').resolves(null);
 
 
     const mock = { ...prospectsMock.mockDefensiveStats }
@@ -121,6 +123,7 @@ describe("Create Prospect Stats [POST]", () => {
     const prospectStatsModel = sinon.mock(ProspectStatsModel)
 
     prospectModel.expects("findOne").chain('exec').resolves(prospectsMock.defensiveProspect);
+    prospectStatsModel.expects("findOne").chain('exec').resolves(null);
 
     const mock = { ...prospectsMock.mockDefensiveStats }
 

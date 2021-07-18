@@ -45,31 +45,6 @@ describe("Create Prospect Stats [POST]", () => {
       });
   })
 
-
-  it("error - remove evaluation not", () => {
-
-    prospectModel.expects("findOne").chain('exec').atLeast(1).atMost(1).resolves(prospectsMock.defensiveProspect);
-    prospectEvaluationModel.expects("deleteOne").chain('exec').throws()
-
-    return lambdaTester(removeProspectEvaluation)
-      .event({
-        pathParameters: { id: prospectsMock.defensiveProspect.id },
-        requestContext: {
-          authorizer: {
-            principalId: 'TEST'
-          }
-        },
-        body: JSON.stringify({
-          ...prospectsMock.mockDefensiveStats,
-        }),
-      })
-      .expectResult((result: any) => {
-        expect(result.statusCode).to.equal(400);
-        prospectEvaluationModel.restore();
-        prospectModel.restore();
-      });
-  })
-
   it("User should not be allowed to inform an overall directly", () => {
     return lambdaTester(updateProspectEvaluation)
       .event({
@@ -92,7 +67,7 @@ describe("Create Prospect Stats [POST]", () => {
 
     prospectModel.expects("findOne").chain('exec').atLeast(1).atMost(1).resolves(prospectsMock.defensiveProspect);
     prospectEvaluationModel.expects("findOne").chain('exec').resolves({
-      user: 'TEST', prospect: 'randomstring' , evaluation:{
+      user: 'TEST', prospect: 'randomstring', evaluation: {
         tackling: 8,
         runSupport: 8,
         zoneCoverage: 9,
@@ -100,10 +75,11 @@ describe("Create Prospect Stats [POST]", () => {
         footballIQ: 10,
         passRushAbility: 9,
         athleticism: 8
-    }}); 
+      }
+    });
 
     prospectEvaluationModel.expects("findOneAndUpdate").chain('exec').resolves({
-      user: 'TEST', prospect: 'randomstring' , evaluation: {
+      user: 'TEST', prospect: 'randomstring', evaluation: {
         tackling: 8,
         runSupport: 8,
         zoneCoverage: 9,
@@ -111,8 +87,9 @@ describe("Create Prospect Stats [POST]", () => {
         footballIQ: 10,
         passRushAbility: 9,
         athleticism: 8,
-        
-    }})
+
+      }
+    })
 
     return lambdaTester(updateProspectEvaluation)
       .event({
@@ -128,7 +105,7 @@ describe("Create Prospect Stats [POST]", () => {
       })
       .expectResult((result: any) => {
         expect(result.statusCode).to.equal(200);
-        const body = JSON.parse(result.body); 
+        const body = JSON.parse(result.body);
         expect(body.data).to.haveOwnProperty('overall');
         expect(body.data).to.haveOwnProperty('manCoverage');
         expect(body.data.manCoverage).to.eql(8.3);

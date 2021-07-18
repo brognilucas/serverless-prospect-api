@@ -9,7 +9,6 @@ require('sinon-mongoose');
 
 describe("FindOne [GET]", () => {
   it("success", () => {
-    try {
       const s = sinon.mock(ProspectModel)
 
       s.expects("findOne").chain('exec').atLeast(1).atMost(3).resolves(prospectsMock.findOne);
@@ -23,9 +22,7 @@ describe("FindOne [GET]", () => {
           s.verify();
           s.restore();
         });
-    } catch (err) {
-      console.log(err);
-    }
+
   });
 });
 

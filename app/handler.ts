@@ -11,6 +11,14 @@ dotenv.config({
   path: dotenvPath,
 });
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const Sentry = require("@sentry/serverless");
+
+Sentry.AWSLambda.init({
+  dsn: "https://c3f377dbd6274752bea1a043d58f1681@o919686.ingest.sentry.io/5864034",
+  tracesSampleRate: 1.0,
+});
+
 import {
   prospect,
   prospectStats as prospectStatsModel,
@@ -36,56 +44,56 @@ const evaluationController = new ProspectEvaluationController(
   prospectEvaluationModel
 );
 
-export const create: Handler = (event: IEvent) => prospectController.create(event);
+export const create: Handler = Sentry.AWSLambda.wrapHandler(async (event: IEvent) => prospectController.create(event));
 
-export const update: Handler = (event: IEvent) => prospectController.update(event);
+export const update: Handler = Sentry.AWSLambda.wrapHandler(async (event: IEvent) => prospectController.update(event));
 
-export const find: Handler = (event: IEvent) => prospectController.find(event);
+export const find: Handler = Sentry.AWSLambda.wrapHandler(async (event: IEvent) => prospectController.find(event));
 
-export const findOne: Handler = (event: IEvent) => prospectController.findOne(event);
+export const findOne: Handler = Sentry.AWSLambda.wrapHandler(async (event: IEvent) => prospectController.findOne(event));
 
-export const deleteOne: Handler = (event: IEvent) => prospectController.deleteOne(event);
+export const deleteOne: Handler = Sentry.AWSLambda.wrapHandler(async (event: IEvent) => prospectController.deleteOne(event));
 
-export const enable: Handler = (event: IEvent) => prospectController.enableProspect(event);
+export const enable: Handler = Sentry.AWSLambda.wrapHandler(async (event: IEvent) => prospectController.enableProspect(event));
 
-export const disable: Handler = (event: IEvent) => prospectController.disableProspect(event);
+export const disable: Handler = Sentry.AWSLambda.wrapHandler(async (event: IEvent) => prospectController.disableProspect(event));
 
-export const createStats: Handler = (event: IEvent) => prospectStats.create(event);
+export const createStats: Handler =Sentry.AWSLambda.wrapHandler(async (event: IEvent) => prospectStats.create(event));
 
-export const findStatsByProspect: Handler = (event: IEvent) => prospectStats.findByProspect(event);
+export const findStatsByProspect: Handler = Sentry.AWSLambda.wrapHandler(async  (event: IEvent) => prospectStats.findByProspect(event));
 
-export const updateStats: Handler = (event: IEvent) => prospectStats.update(event);
+export const updateStats: Handler = Sentry.AWSLambda.wrapHandler(async (event: IEvent) => prospectStats.update(event));
 
-export const compareProspectsByStats: Handler = (event: IEvent) => prospectStats.findRelatedProspects(event);
+export const compareProspectsByStats: Handler = Sentry.AWSLambda.wrapHandler(async  (event: IEvent) => prospectStats.findRelatedProspects(event));
 
-export const createProspectCombineInfo: Handler = (event: IEvent) => prospectCombineController.createController(event);
+export const createProspectCombineInfo: Handler = Sentry.AWSLambda.wrapHandler(async  (event: IEvent) => prospectCombineController.createController(event));
 
-export const findCombineDataByProspect: Handler = (event: IEvent) => prospectCombineController.listCombineDataByProspect(event);
+export const findCombineDataByProspect: Handler = Sentry.AWSLambda.wrapHandler(async  (event: IEvent) => prospectCombineController.listCombineDataByProspect(event));
 
-export const findCombineData: Handler = (event: IEvent) => prospectCombineController.listCombineData(event);
+export const findCombineData: Handler = Sentry.AWSLambda.wrapHandler(async  (event: IEvent) => prospectCombineController.listCombineData(event));
 
-export const updateCombineData: Handler = (event: IEvent) => prospectCombineController.updateController(event);
+export const updateCombineData: Handler = Sentry.AWSLambda.wrapHandler(async  (event: IEvent) => prospectCombineController.updateController(event));
 
-export const deleteCombineData: Handler = (event: IEvent) => prospectCombineController.deleteController(event);
+export const deleteCombineData: Handler = Sentry.AWSLambda.wrapHandler(async  (event: IEvent) => prospectCombineController.deleteController(event));
 
-export const evaluateProspect: Handler = (event: IEvent) => evaluationController.createController(event);
+export const evaluateProspect: Handler = Sentry.AWSLambda.wrapHandler(async  (event: IEvent) => evaluationController.createController(event));
 
-export const findUserProspectEvaluations: Handler = (event: IEvent) => evaluationController.findEvaluationProspectByUserController(event);
+export const findUserProspectEvaluations: Handler = Sentry.AWSLambda.wrapHandler(async  (event: IEvent) => evaluationController.findEvaluationProspectByUserController(event));
 
-export const updateProspectEvaluation: Handler = (event: IEvent) => evaluationController.patchUpdateEvaluation(event);
+export const updateProspectEvaluation: Handler = Sentry.AWSLambda.wrapHandler(async  (event: IEvent) => evaluationController.patchUpdateEvaluation(event));
 
-export const findProspectEvaluations: Handler = (event: IEvent) => evaluationController.findEvaluationsProspectController(event);
+export const findProspectEvaluations: Handler = Sentry.AWSLambda.wrapHandler(async  (event: IEvent) => evaluationController.findEvaluationsProspectController(event));
 
-export const removeProspectEvaluation: Handler = (event: IEvent) => evaluationController.removeEvaluationProspect(event);
+export const removeProspectEvaluation: Handler = Sentry.AWSLambda.wrapHandler(async  (event: IEvent) => evaluationController.removeEvaluationProspect(event));
 
-export const createUser: Handler = (event: IEvent) => userController.createController(event);
+export const createUser: Handler = Sentry.AWSLambda.wrapHandler(async  (event: IEvent) => userController.createController(event));
 
-export const login: Handler = (event: IEvent) => userController.loginController(event);
+export const login: Handler = Sentry.AWSLambda.wrapHandler(async  (event: IEvent) => userController.loginController(event));
 
-export const authorizerFunc: Handler = (event: {
+export const authorizerFunc: Handler = Sentry.AWSLambda.wrapHandler(async  (event: {
   authorizationToken: string;
   requestContext;
-}) => Authorization.validateToken(event);
+}) => Authorization.validateToken(event));
 
-export const makeAdm: Handler = (event) =>
-  userController.makeAdministrator(event);
+export const makeAdm: Handler = Sentry.AWSLambda.wrapHandler(async (event) =>
+  userController.makeAdministrator(event));
