@@ -44,6 +44,7 @@ functions:
           path: prospects
           method: post
           authorizer: authorizerFunc 
+          cors: true
   
   update:
     handler: app/handler.update
@@ -51,6 +52,7 @@ functions:
       - http:
           path: prospects/{id}
           method: put
+          cors: true
   find:
     handler: app/handler.find
     events:
@@ -59,6 +61,7 @@ functions:
           method: get
           caching:
             enabled: false
+          cors: true
             
   findOne:
     handler: app/handler.findOne
@@ -70,6 +73,7 @@ functions:
             enabled: false
             cacheKeyParameters:
               - name: request.path.id
+          cors: true
 
   deleteOne:
     handler: app/handler.deleteOne
@@ -78,6 +82,7 @@ functions:
           path: prospects/{id}
           method: delete
           authorizer: authorizerFunc
+          cors: true
 
   disable: 
     handler: app/handler.disable
@@ -86,6 +91,7 @@ functions:
           path: prospects/{id}/disable
           method: put
           authorizer: authorizerFunc
+          cors: true
   
   enable: 
     handler: app/handler.enable
@@ -94,6 +100,7 @@ functions:
           path: prospects/{id}/enable
           method: put
           authorizer: authorizerFunc
+          cors: true
 
   createStatsProspects: 
     handler: app/handler.createStats
@@ -106,6 +113,7 @@ functions:
             cacheKeyParameters:
               - name: request.path.id
           authorizer: authorizerFunc
+          cors: true
 
   updateStatsProspect: 
     handler: app/handler.updateStats
@@ -114,6 +122,7 @@ functions:
           path: prospects/{id}/stats
           method: put
           authorizer: authorizerFunc
+          cors: true
 
   findStatsByProspect: 
     handler: app/handler.findStatsByProspect
@@ -125,6 +134,7 @@ functions:
             enabled: false
             cacheKeyParameters:
               - name: request.path.id
+          cors: true
 
   compareProspectsByStats: 
     handler: app/handler.compareProspectsByStats
@@ -136,6 +146,7 @@ functions:
             enabled: false
             cacheKeyParameters:
               - name: request.path.id
+          cors: true
 
   createProspectCombineInfo: 
     handler: app/handler.createProspectCombineInfo
@@ -144,6 +155,7 @@ functions:
           path: prospects/{id}/combine
           method: post
           authorizer: authorizerFunc
+          cors: true
           
   findCombineDataByProspect: 
     handler: app/handler.findCombineDataByProspect
@@ -155,6 +167,7 @@ functions:
             enabled: false
             cacheKeyParameters:
               - name: request.path.id
+          cors: true
   
   findCombineData: 
     handler: app/handler.findCombineData
@@ -162,6 +175,7 @@ functions:
       - http:
           path: prospects/combine
           method: get
+          cors: true
 
   updateCombineData: 
     handler: app/handler.updateCombineData
@@ -170,6 +184,7 @@ functions:
           path: prospects/{id}/combine
           method: put
           authorizer: authorizerFunc
+          cors: true
   
   deleteCombineData: 
     handler: app/handler.deleteCombineData
@@ -178,6 +193,7 @@ functions:
           path: prospects/{id}/combine
           method: delete
           authorizer: authorizerFunc
+          cors: true
 
   createUser: 
     handler: app/handler.createUser
@@ -185,6 +201,7 @@ functions:
       - http:
           path: users
           method: post
+          cors: true
 
   evaluateProspect: 
     handler: app/handler.evaluateProspect
@@ -193,6 +210,7 @@ functions:
           path: prospects/{id}/evaluations
           method: post
           authorizer: authorizerFunc
+          cors: true
 
   findUserProspectEvaluations: 
     handler: app/handler.findUserProspectEvaluations
@@ -201,6 +219,7 @@ functions:
           path: prospects/{id}/user/evaluations
           method: get
           authorizer: authorizerFunc
+          cors: true
   
   removeProspectEvaluation: 
     handler: app/handler.removeProspectEvaluation
@@ -209,6 +228,7 @@ functions:
           path: prospects/{id}/evaluations
           method: delete
           authorizer: authorizerFunc
+          cors: true
   
   findProspectEvaluations: 
     handler: app/handler.findProspectEvaluations
@@ -216,6 +236,7 @@ functions:
       - http:
           path: prospects/{id}/evaluations
           method: get
+          cors: true
 
   updateProspectEvaluation: 
     handler: app/handler.updateProspectEvaluation
@@ -224,6 +245,7 @@ functions:
           path: prospects/{id}/evaluations
           method: patch
           authorizer: authorizerFunc
+          cors: true
 
   login: 
     handler: app/handler.login
@@ -231,6 +253,7 @@ functions:
       - http:
           path: login
           method: post
+          cors: true
   
   makeUserAdm: 
     handler: app/handler.makeAdm
@@ -238,7 +261,7 @@ functions:
       - http:
           path: users/makeAdm
           method: post
-
+          cors: true
 
   authorizerFunc:
     handler: app/handler.authorizerFunc
