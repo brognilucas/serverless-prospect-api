@@ -44,7 +44,16 @@ functions:
           path: prospects
           method: post
           authorizer: authorizerFunc 
-
+          cors:
+            origin: '*' # <-- Specify allowed origin
+            headers: # <-- Specify allowed headers
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: true
   
   update:
     handler: app/handler.update
@@ -52,7 +61,16 @@ functions:
       - http:
           path: prospects/{id}
           method: put
-
+          cors:
+            origin: '*' # <-- Specify allowed origin
+            headers: # <-- Specify allowed headers
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: true
 
   find:
     handler: app/handler.find
@@ -62,7 +80,16 @@ functions:
           method: get
           caching:
             enabled: false
-
+          cors:
+            origin: '*' # <-- Specify allowed origin
+            headers: # <-- Specify allowed headers
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: true
             
   findOne:
     handler: app/handler.findOne
@@ -74,7 +101,16 @@ functions:
             enabled: false
             cacheKeyParameters:
               - name: request.path.id
-
+                cors:
+            origin: '*' # <-- Specify allowed origin
+            headers: # <-- Specify allowed headers
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: true
 
   deleteOne:
     handler: app/handler.deleteOne
@@ -83,7 +119,16 @@ functions:
           path: prospects/{id}
           method: delete
           authorizer: authorizerFunc
-
+          cors:
+            origin: '*' # <-- Specify allowed origin
+            headers: # <-- Specify allowed headers
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: true
 
   disable: 
     handler: app/handler.disable
@@ -92,7 +137,16 @@ functions:
           path: prospects/{id}/disable
           method: put
           authorizer: authorizerFunc
-
+          cors:
+            origin: '*' # <-- Specify allowed origin
+            headers: # <-- Specify allowed headers
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: true
   
   enable: 
     handler: app/handler.enable
@@ -101,7 +155,16 @@ functions:
           path: prospects/{id}/enable
           method: put
           authorizer: authorizerFunc
-
+          cors:
+            origin: '*' # <-- Specify allowed origin
+            headers: # <-- Specify allowed headers
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: true
 
   createStatsProspects: 
     handler: app/handler.createStats
@@ -114,7 +177,16 @@ functions:
             cacheKeyParameters:
               - name: request.path.id
           authorizer: authorizerFunc
-
+          cors:
+            origin: '*' # <-- Specify allowed origin
+            headers: # <-- Specify allowed headers
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: true
 
   updateStatsProspect: 
     handler: app/handler.updateStats
@@ -123,7 +195,16 @@ functions:
           path: prospects/{id}/stats
           method: put
           authorizer: authorizerFunc
-
+          cors:
+            origin: '*' # <-- Specify allowed origin
+            headers: # <-- Specify allowed headers
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: true
 
 
   findStatsByProspect: 
@@ -136,7 +217,16 @@ functions:
             enabled: false
             cacheKeyParameters:
               - name: request.path.id
-
+                cors:
+            origin: '*' # <-- Specify allowed origin
+            headers: # <-- Specify allowed headers
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: true
 
 
   compareProspectsByStats: 
@@ -149,7 +239,16 @@ functions:
             enabled: false
             cacheKeyParameters:
               - name: request.path.id
-
+                cors:
+            origin: '*' # <-- Specify allowed origin
+            headers: # <-- Specify allowed headers
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: true
 
 
   createProspectCombineInfo: 
@@ -159,7 +258,16 @@ functions:
           path: prospects/{id}/combine
           method: post
           authorizer: authorizerFunc
-
+          cors:
+            origin: '*' # <-- Specify allowed origin
+            headers: # <-- Specify allowed headers
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: true
 
           
   findCombineDataByProspect: 
@@ -172,7 +280,16 @@ functions:
             enabled: false
             cacheKeyParameters:
               - name: request.path.id
-
+                cors:
+            origin: '*' # <-- Specify allowed origin
+            headers: # <-- Specify allowed headers
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: true
 
   
   findCombineData: 
@@ -181,7 +298,16 @@ functions:
       - http:
           path: prospects/combine
           method: get
-
+          cors:
+            origin: '*' # <-- Specify allowed origin
+            headers: # <-- Specify allowed headers
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: true
 
 
   updateCombineData: 
@@ -191,7 +317,16 @@ functions:
           path: prospects/{id}/combine
           method: put
           authorizer: authorizerFunc
-
+          cors:
+            origin: '*' # <-- Specify allowed origin
+            headers: # <-- Specify allowed headers
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: true
 
   
   deleteCombineData: 
@@ -201,7 +336,16 @@ functions:
           path: prospects/{id}/combine
           method: delete
           authorizer: authorizerFunc
-
+          cors:
+            origin: '*' # <-- Specify allowed origin
+            headers: # <-- Specify allowed headers
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: true
 
 
   createUser: 
@@ -210,7 +354,16 @@ functions:
       - http:
           path: users
           method: post
-
+          cors:
+            origin: '*' # <-- Specify allowed origin
+            headers: # <-- Specify allowed headers
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: true
 
 
   evaluateProspect: 
@@ -220,7 +373,16 @@ functions:
           path: prospects/{id}/evaluations
           method: post
           authorizer: authorizerFunc
-
+          cors:
+            origin: '*' # <-- Specify allowed origin
+            headers: # <-- Specify allowed headers
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: true
 
 
   findUserProspectEvaluations: 
@@ -230,7 +392,16 @@ functions:
           path: prospects/{id}/user/evaluations
           method: get
           authorizer: authorizerFunc
-
+          cors:
+            origin: '*' # <-- Specify allowed origin
+            headers: # <-- Specify allowed headers
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: true
 
   
   removeProspectEvaluation: 
@@ -240,7 +411,16 @@ functions:
           path: prospects/{id}/evaluations
           method: delete
           authorizer: authorizerFunc
-
+          cors:
+            origin: '*' # <-- Specify allowed origin
+            headers: # <-- Specify allowed headers
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: true
 
   
   findProspectEvaluations: 
@@ -249,7 +429,16 @@ functions:
       - http:
           path: prospects/{id}/evaluations
           method: get
-
+          cors:
+            origin: '*' # <-- Specify allowed origin
+            headers: # <-- Specify allowed headers
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: true
 
 
   updateProspectEvaluation: 
@@ -259,7 +448,16 @@ functions:
           path: prospects/{id}/evaluations
           method: patch
           authorizer: authorizerFunc
-
+          cors:
+            origin: '*' # <-- Specify allowed origin
+            headers: # <-- Specify allowed headers
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: true
 
 
   login: 
@@ -268,7 +466,16 @@ functions:
       - http:
           path: login
           method: post
-
+          cors:
+            origin: '*' # <-- Specify allowed origin
+            headers: # <-- Specify allowed headers
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: true
 
   
   makeUserAdm: 
@@ -277,7 +484,16 @@ functions:
       - http:
           path: users/makeAdm
           method: post
-
+          cors:
+            origin: '*' # <-- Specify allowed origin
+            headers: # <-- Specify allowed headers
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: true
 
 
   authorizerFunc:
