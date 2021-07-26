@@ -46,7 +46,7 @@ functions:
           authorizer: authorizerFunc 
           cors:
             enabled: true
-            origin: 'https://prospects-hub.com/'
+            origin: '*'
   
   update:
     handler: app/handler.update
@@ -56,7 +56,7 @@ functions:
           method: put
           cors:
             enabled: true
-            origin: 'https://prospects-hub.com/'
+            origin: '*'
 
   find:
     handler: app/handler.find
@@ -68,7 +68,7 @@ functions:
             enabled: false
           cors:
             enabled: true
-            origin: 'https://prospects-hub.com/'
+            origin: '*'
             
   findOne:
     handler: app/handler.findOne
@@ -82,7 +82,7 @@ functions:
               - name: request.path.id
           cors:
             enabled: true
-            origin: 'https://prospects-hub.com/'
+            origin: '*'
 
   deleteOne:
     handler: app/handler.deleteOne
@@ -93,7 +93,7 @@ functions:
           authorizer: authorizerFunc
           cors:
             enabled: true
-            origin: 'https://prospects-hub.com/'
+            origin: '*'
 
   disable: 
     handler: app/handler.disable
@@ -104,7 +104,7 @@ functions:
           authorizer: authorizerFunc
           cors:
             enabled: true
-            origin: 'https://prospects-hub.com/'
+            origin: '*'
   
   enable: 
     handler: app/handler.enable
@@ -115,7 +115,7 @@ functions:
           authorizer: authorizerFunc
           cors:
             enabled: true
-            origin: 'https://prospects-hub.com/'
+            origin: '*'
 
   createStatsProspects: 
     handler: app/handler.createStats
@@ -130,7 +130,7 @@ functions:
           authorizer: authorizerFunc
           cors:
             enabled: true
-            origin: 'https://prospects-hub.com/'
+            origin: '*'
 
   updateStatsProspect: 
     handler: app/handler.updateStats
@@ -141,7 +141,7 @@ functions:
           authorizer: authorizerFunc
           cors:
             enabled: true
-            origin: 'https://prospects-hub.com/'
+            origin: '*'
 
 
   findStatsByProspect: 
@@ -156,7 +156,7 @@ functions:
               - name: request.path.id
           cors:
             enabled: true
-            origin: 'https://prospects-hub.com/'
+            origin: '*'
 
 
   compareProspectsByStats: 
@@ -171,7 +171,7 @@ functions:
               - name: request.path.id
           cors:
             enabled: true
-            origin: 'https://prospects-hub.com/'
+            origin: '*'
 
 
   createProspectCombineInfo: 
@@ -183,7 +183,7 @@ functions:
           authorizer: authorizerFunc
           cors:
             enabled: true
-            origin: 'https://prospects-hub.com/'
+            origin: '*'
 
           
   findCombineDataByProspect: 
@@ -198,7 +198,7 @@ functions:
               - name: request.path.id
           cors:
             enabled: true
-            origin: 'https://prospects-hub.com/'
+            origin: '*'
 
   
   findCombineData: 
@@ -209,7 +209,7 @@ functions:
           method: get
           cors:
             enabled: true
-            origin: 'https://prospects-hub.com/'
+            origin: '*'
 
 
   updateCombineData: 
@@ -221,7 +221,7 @@ functions:
           authorizer: authorizerFunc
           cors:
             enabled: true
-            origin: 'https://prospects-hub.com/'
+            origin: '*'
 
   
   deleteCombineData: 
@@ -233,7 +233,7 @@ functions:
           authorizer: authorizerFunc
           cors:
             enabled: true
-            origin: 'https://prospects-hub.com/'
+            origin: '*'
 
 
   createUser: 
@@ -244,7 +244,7 @@ functions:
           method: post
           cors:
             enabled: true
-            origin: 'https://prospects-hub.com/'
+            origin: '*'
 
 
   evaluateProspect: 
@@ -256,7 +256,7 @@ functions:
           authorizer: authorizerFunc
           cors:
             enabled: true
-            origin: 'https://prospects-hub.com/'
+            origin: '*'
 
 
   findUserProspectEvaluations: 
@@ -268,7 +268,7 @@ functions:
           authorizer: authorizerFunc
           cors:
             enabled: true
-            origin: 'https://prospects-hub.com/'
+            origin: '*'
 
   
   removeProspectEvaluation: 
@@ -280,7 +280,7 @@ functions:
           authorizer: authorizerFunc
           cors:
             enabled: true
-            origin: 'https://prospects-hub.com/'
+            origin: '*'
 
   
   findProspectEvaluations: 
@@ -291,7 +291,7 @@ functions:
           method: get
           cors:
             enabled: true
-            origin: 'https://prospects-hub.com/'
+            origin: '*'
 
 
   updateProspectEvaluation: 
@@ -303,7 +303,7 @@ functions:
           authorizer: authorizerFunc
           cors:
             enabled: true
-            origin: 'https://prospects-hub.com/'
+            origin: '*'
 
 
   login: 
@@ -314,7 +314,7 @@ functions:
           method: post
           cors:
             enabled: true
-            origin: 'https://prospects-hub.com/'
+            origin: '*'
 
   
   makeUserAdm: 
@@ -325,7 +325,7 @@ functions:
           method: post
           cors:
             enabled: true
-            origin: 'https://prospects-hub.com/'
+            origin: '*'
 
 
   authorizerFunc:
