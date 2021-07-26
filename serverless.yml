@@ -26,7 +26,6 @@ custom:
   apiGatewayCaching:
     enabled: false
 
-
 package:
   exclude:
     - config/.env.stg

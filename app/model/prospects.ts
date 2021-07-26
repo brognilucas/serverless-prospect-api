@@ -10,6 +10,7 @@ export type ProspectDocument = mongoose.Document & {
   college: string;
   size: string;
   weight: string;
+  imageURL: string;
   draftYear: number;
   createdAt: Date;
 };
@@ -25,6 +26,7 @@ const prospectSchema = new mongoose.Schema({
   size: String,
   weight: String,
   active: Boolean,
+  imageURL: String,
   createdAt: { type: Date, default: Date.now },
 });
 

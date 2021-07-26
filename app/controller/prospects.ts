@@ -40,8 +40,22 @@ export class ProspectController extends ProspectService {
 
   }
 
+  createFilter(filters) {
+    const mongoFilters = {};
+
+    Object.entries(filters).forEach((item) => {
+      const filterKey: string = item[0];
+      const filterValue: string = item[1] as string || '';
+
+      mongoFilters[filterKey] = new RegExp(filterValue, 'i');
+    })
+
+    return mongoFilters
+  }
+
   async find(event: IEvent) {
-    const filter = event.queryStringParameters;
+    const filter = this.createFilter(event.queryStringParameters || {});
+
     const result = await this.findProspects(filter);
     return MessageUtil.success(result);
   }
