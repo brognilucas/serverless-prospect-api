@@ -20,6 +20,7 @@
     "bcrypt": "^5.0.1",
     "dotenv": "^8.2.0",
     "jsonwebtoken": "^8.5.1",
+    "middy": "^0.36.0",
     "mongoose": "^5.11.15",
     "npm": "^7.7.5",
     "serverless-api-gateway-caching": "^1.7.2",
