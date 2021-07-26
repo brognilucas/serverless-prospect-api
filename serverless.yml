@@ -45,7 +45,7 @@ functions:
           method: post
           authorizer: authorizerFunc 
           cors:
-            origin: '*'
+            origin: 'https://prospects-hub.com/'
   
   update:
     handler: app/handler.update
@@ -54,7 +54,7 @@ functions:
           path: prospects/{id}
           method: put
           cors:
-            origin: '*'
+            origin: 'https://prospects-hub.com/'
   find:
     handler: app/handler.find
     events:
@@ -64,7 +64,7 @@ functions:
           caching:
             enabled: false
           cors:
-            origin: '*'
+            origin: 'https://prospects-hub.com/'
             
   findOne:
     handler: app/handler.findOne
@@ -77,7 +77,7 @@ functions:
             cacheKeyParameters:
               - name: request.path.id
           cors:
-            origin: '*'
+            origin: 'https://prospects-hub.com/'
 
   deleteOne:
     handler: app/handler.deleteOne
@@ -87,7 +87,7 @@ functions:
           method: delete
           authorizer: authorizerFunc
           cors:
-            origin: '*'
+            origin: 'https://prospects-hub.com/'
 
   disable: 
     handler: app/handler.disable
@@ -97,7 +97,7 @@ functions:
           method: put
           authorizer: authorizerFunc
           cors:
-            origin: '*'
+            origin: 'https://prospects-hub.com/'
   
   enable: 
     handler: app/handler.enable
@@ -107,7 +107,7 @@ functions:
           method: put
           authorizer: authorizerFunc
           cors:
-            origin: '*'
+            origin: 'https://prospects-hub.com/'
 
   createStatsProspects: 
     handler: app/handler.createStats
@@ -121,7 +121,7 @@ functions:
               - name: request.path.id
           authorizer: authorizerFunc
           cors:
-            origin: '*'
+            origin: 'https://prospects-hub.com/'
 
   updateStatsProspect: 
     handler: app/handler.updateStats
@@ -131,7 +131,7 @@ functions:
           method: put
           authorizer: authorizerFunc
           cors:
-            origin: '*'
+            origin: 'https://prospects-hub.com/'
 
   findStatsByProspect: 
     handler: app/handler.findStatsByProspect
@@ -144,7 +144,7 @@ functions:
             cacheKeyParameters:
               - name: request.path.id
           cors:
-            origin: '*'
+            origin: 'https://prospects-hub.com/'
 
   compareProspectsByStats: 
     handler: app/handler.compareProspectsByStats
@@ -157,7 +157,7 @@ functions:
             cacheKeyParameters:
               - name: request.path.id
           cors:
-            origin: '*'
+            origin: 'https://prospects-hub.com/'
 
   createProspectCombineInfo: 
     handler: app/handler.createProspectCombineInfo
@@ -167,7 +167,7 @@ functions:
           method: post
           authorizer: authorizerFunc
           cors:
-            origin: '*'
+            origin: 'https://prospects-hub.com/'
           
   findCombineDataByProspect: 
     handler: app/handler.findCombineDataByProspect
@@ -180,7 +180,7 @@ functions:
             cacheKeyParameters:
               - name: request.path.id
           cors:
-            origin: '*'
+            origin: 'https://prospects-hub.com/'
   
   findCombineData: 
     handler: app/handler.findCombineData
@@ -189,7 +189,7 @@ functions:
           path: prospects/combine
           method: get
           cors:
-            origin: '*'
+            origin: 'https://prospects-hub.com/'
 
   updateCombineData: 
     handler: app/handler.updateCombineData
@@ -199,7 +199,7 @@ functions:
           method: put
           authorizer: authorizerFunc
           cors:
-            origin: '*'
+            origin: 'https://prospects-hub.com/'
   
   deleteCombineData: 
     handler: app/handler.deleteCombineData
@@ -209,7 +209,7 @@ functions:
           method: delete
           authorizer: authorizerFunc
           cors:
-            origin: '*'
+            origin: 'https://prospects-hub.com/'
 
   createUser: 
     handler: app/handler.createUser
@@ -218,7 +218,7 @@ functions:
           path: users
           method: post
           cors:
-            origin: '*'
+            origin: 'https://prospects-hub.com/'
 
   evaluateProspect: 
     handler: app/handler.evaluateProspect
@@ -228,7 +228,7 @@ functions:
           method: post
           authorizer: authorizerFunc
           cors:
-            origin: '*'
+            origin: 'https://prospects-hub.com/'
 
   findUserProspectEvaluations: 
     handler: app/handler.findUserProspectEvaluations
@@ -238,7 +238,7 @@ functions:
           method: get
           authorizer: authorizerFunc
           cors:
-            origin: '*'
+            origin: 'https://prospects-hub.com/'
   
   removeProspectEvaluation: 
     handler: app/handler.removeProspectEvaluation
@@ -248,7 +248,7 @@ functions:
           method: delete
           authorizer: authorizerFunc
           cors:
-            origin: '*'
+            origin: 'https://prospects-hub.com/'
   
   findProspectEvaluations: 
     handler: app/handler.findProspectEvaluations
@@ -257,7 +257,7 @@ functions:
           path: prospects/{id}/evaluations
           method: get
           cors:
-            origin: '*'
+            origin: 'https://prospects-hub.com/'
 
   updateProspectEvaluation: 
     handler: app/handler.updateProspectEvaluation
@@ -267,7 +267,7 @@ functions:
           method: patch
           authorizer: authorizerFunc
           cors:
-            origin: '*'
+            origin: 'https://prospects-hub.com/'
 
   login: 
     handler: app/handler.login
@@ -276,7 +276,7 @@ functions:
           path: login
           method: post
           cors:
-            origin: '*'
+            origin: 'https://prospects-hub.com/'
   
   makeUserAdm: 
     handler: app/handler.makeAdm
@@ -285,7 +285,7 @@ functions:
           path: users/makeAdm
           method: post
           cors:
-            origin: '*'
+            origin: 'https://prospects-hub.com/'
 
   authorizerFunc:
     handler: app/handler.authorizerFunc
