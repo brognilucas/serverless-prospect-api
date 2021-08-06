@@ -45,8 +45,8 @@ functions:
           method: post
           authorizer: authorizerFunc 
           cors:
-            origin: '*' # <-- Specify allowed origin
-            headers: # <-- Specify allowed headers
+            origin: '*' 
+            headers: 
               - Content-Type
               - X-Amz-Date
               - Authorization
@@ -62,8 +62,8 @@ functions:
           path: prospects/{id}
           method: put
           cors:
-            origin: '*' # <-- Specify allowed origin
-            headers: # <-- Specify allowed headers
+            origin: '*' 
+            headers: 
               - Content-Type
               - X-Amz-Date
               - Authorization
@@ -81,8 +81,8 @@ functions:
           caching:
             enabled: false
           cors:
-            origin: '*' # <-- Specify allowed origin
-            headers: # <-- Specify allowed headers
+            origin: '*' 
+            headers: 
               - Content-Type
               - X-Amz-Date
               - Authorization
@@ -102,8 +102,8 @@ functions:
             cacheKeyParameters:
               - name: request.path.id
                 cors:
-            origin: '*' # <-- Specify allowed origin
-            headers: # <-- Specify allowed headers
+            origin: '*' 
+            headers: 
               - Content-Type
               - X-Amz-Date
               - Authorization
@@ -120,8 +120,8 @@ functions:
           method: delete
           authorizer: authorizerFunc
           cors:
-            origin: '*' # <-- Specify allowed origin
-            headers: # <-- Specify allowed headers
+            origin: '*' 
+            headers: 
               - Content-Type
               - X-Amz-Date
               - Authorization
@@ -138,8 +138,8 @@ functions:
           method: put
           authorizer: authorizerFunc
           cors:
-            origin: '*' # <-- Specify allowed origin
-            headers: # <-- Specify allowed headers
+            origin: '*' 
+            headers: 
               - Content-Type
               - X-Amz-Date
               - Authorization
@@ -156,8 +156,8 @@ functions:
           method: put
           authorizer: authorizerFunc
           cors:
-            origin: '*' # <-- Specify allowed origin
-            headers: # <-- Specify allowed headers
+            origin: '*' 
+            headers: 
               - Content-Type
               - X-Amz-Date
               - Authorization
@@ -178,8 +178,8 @@ functions:
               - name: request.path.id
           authorizer: authorizerFunc
           cors:
-            origin: '*' # <-- Specify allowed origin
-            headers: # <-- Specify allowed headers
+            origin: '*' 
+            headers: 
               - Content-Type
               - X-Amz-Date
               - Authorization
@@ -196,8 +196,8 @@ functions:
           method: put
           authorizer: authorizerFunc
           cors:
-            origin: '*' # <-- Specify allowed origin
-            headers: # <-- Specify allowed headers
+            origin: '*' 
+            headers: 
               - Content-Type
               - X-Amz-Date
               - Authorization
@@ -218,8 +218,8 @@ functions:
             cacheKeyParameters:
               - name: request.path.id
                 cors:
-            origin: '*' # <-- Specify allowed origin
-            headers: # <-- Specify allowed headers
+            origin: '*' 
+            headers: 
               - Content-Type
               - X-Amz-Date
               - Authorization
@@ -240,8 +240,8 @@ functions:
             cacheKeyParameters:
               - name: request.path.id
                 cors:
-            origin: '*' # <-- Specify allowed origin
-            headers: # <-- Specify allowed headers
+            origin: '*' 
+            headers: 
               - Content-Type
               - X-Amz-Date
               - Authorization
@@ -259,8 +259,8 @@ functions:
           method: post
           authorizer: authorizerFunc
           cors:
-            origin: '*' # <-- Specify allowed origin
-            headers: # <-- Specify allowed headers
+            origin: '*' 
+            headers: 
               - Content-Type
               - X-Amz-Date
               - Authorization
@@ -281,8 +281,8 @@ functions:
             cacheKeyParameters:
               - name: request.path.id
                 cors:
-            origin: '*' # <-- Specify allowed origin
-            headers: # <-- Specify allowed headers
+            origin: '*' 
+            headers: 
               - Content-Type
               - X-Amz-Date
               - Authorization
@@ -299,8 +299,8 @@ functions:
           path: prospects/combine
           method: get
           cors:
-            origin: '*' # <-- Specify allowed origin
-            headers: # <-- Specify allowed headers
+            origin: '*' 
+            headers: 
               - Content-Type
               - X-Amz-Date
               - Authorization
@@ -318,8 +318,8 @@ functions:
           method: put
           authorizer: authorizerFunc
           cors:
-            origin: '*' # <-- Specify allowed origin
-            headers: # <-- Specify allowed headers
+            origin: '*' 
+            headers: 
               - Content-Type
               - X-Amz-Date
               - Authorization
@@ -337,8 +337,8 @@ functions:
           method: delete
           authorizer: authorizerFunc
           cors:
-            origin: '*' # <-- Specify allowed origin
-            headers: # <-- Specify allowed headers
+            origin: '*' 
+            headers: 
               - Content-Type
               - X-Amz-Date
               - Authorization
@@ -355,8 +355,8 @@ functions:
           path: users
           method: post
           cors:
-            origin: '*' # <-- Specify allowed origin
-            headers: # <-- Specify allowed headers
+            origin: '*' 
+            headers: 
               - Content-Type
               - X-Amz-Date
               - Authorization
@@ -374,8 +374,8 @@ functions:
           method: post
           authorizer: authorizerFunc
           cors:
-            origin: '*' # <-- Specify allowed origin
-            headers: # <-- Specify allowed headers
+            origin: '*' 
+            headers: 
               - Content-Type
               - X-Amz-Date
               - Authorization
@@ -393,8 +393,8 @@ functions:
           method: get
           authorizer: authorizerFunc
           cors:
-            origin: '*' # <-- Specify allowed origin
-            headers: # <-- Specify allowed headers
+            origin: '*' 
+            headers: 
               - Content-Type
               - X-Amz-Date
               - Authorization
@@ -412,8 +412,8 @@ functions:
           method: delete
           authorizer: authorizerFunc
           cors:
-            origin: '*' # <-- Specify allowed origin
-            headers: # <-- Specify allowed headers
+            origin: '*' 
+            headers: 
               - Content-Type
               - X-Amz-Date
               - Authorization
@@ -430,8 +430,8 @@ functions:
           path: prospects/{id}/evaluations
           method: get
           cors:
-            origin: '*' # <-- Specify allowed origin
-            headers: # <-- Specify allowed headers
+            origin: '*' 
+            headers: 
               - Content-Type
               - X-Amz-Date
               - Authorization
@@ -449,8 +449,8 @@ functions:
           method: patch
           authorizer: authorizerFunc
           cors:
-            origin: '*' # <-- Specify allowed origin
-            headers: # <-- Specify allowed headers
+            origin: '*' 
+            headers: 
               - Content-Type
               - X-Amz-Date
               - Authorization
@@ -467,8 +467,8 @@ functions:
           path: login
           method: post
           cors:
-            origin: '*' # <-- Specify allowed origin
-            headers: # <-- Specify allowed headers
+            origin: '*' 
+            headers: 
               - Content-Type
               - X-Amz-Date
               - Authorization
@@ -485,8 +485,8 @@ functions:
           path: users/makeAdm
           method: post
           cors:
-            origin: '*' # <-- Specify allowed origin
-            headers: # <-- Specify allowed headers
+            origin: '*' 
+            headers: 
               - Content-Type
               - X-Amz-Date
               - Authorization
@@ -494,7 +494,23 @@ functions:
               - X-Amz-Security-Token
               - X-Amz-User-Agent
             allowCredentials: true
-
+    
+  createUserCriteria: 
+    handler: app/handler.createCriteria
+    events:
+      - http:
+          path: users/criteria
+          method: post
+          cors:
+            origin: '*' 
+            headers: 
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: true
 
   authorizerFunc:
     handler: app/handler.authorizerFunc

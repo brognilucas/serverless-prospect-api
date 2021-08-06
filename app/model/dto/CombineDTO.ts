@@ -4,7 +4,7 @@ export interface Combine {
     handSize: string;
     verticalJump: number;
     benchReps: number;
-    broadJump: string; 
+    broadJump: string;
     fortyYardsDash: number;
     threeConeDrill: number;
     twentyYardsShuttle: number;

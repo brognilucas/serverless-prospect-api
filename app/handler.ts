@@ -27,6 +27,7 @@ import {
   prospectCombine,
   userModel,
   prospectEvaluationModel,
+  userCriteriaModel
 } from "./model";
 import { ProspectController } from "./controller/prospects";
 import { ProspectStatsController } from "./controller/ProspectStats";
@@ -35,6 +36,7 @@ import { IEvent } from "./model/dto/IEvent";
 import { UserController } from "./controller/User";
 import { Authorization } from "./service/Authorization";
 import { ProspectEvaluationController } from "./controller/ProspectEvaluation";
+import { UserCriteriaController } from './controller/Criteria';
 
 const prospectController = new ProspectController(prospect);
 const prospectStats = new ProspectStatsController(prospectStatsModel);
@@ -45,6 +47,8 @@ const userController = new UserController(userModel);
 const evaluationController = new ProspectEvaluationController(
   prospectEvaluationModel
 );
+
+const userCriteria = new UserCriteriaController(userCriteriaModel);
 
 export const create: Handler = middy(middy(Sentry.AWSLambda.wrapHandler(async (event: IEvent) => prospectController.create(event))).use(cors())).use(cors());
 
@@ -89,6 +93,8 @@ export const findProspectEvaluations: Handler = middy(Sentry.AWSLambda.wrapHandl
 export const removeProspectEvaluation: Handler = middy(Sentry.AWSLambda.wrapHandler(async (event: IEvent) => evaluationController.removeEvaluationProspect(event))).use(cors());
 
 export const createUser: Handler = middy(Sentry.AWSLambda.wrapHandler(async (event: IEvent) => userController.createController(event))).use(cors());
+
+export const createCriteria: Handler = middy(Sentry.AWSLambda.wrapHandler(async (event: IEvent) => userCriteria.create(event))).use(cors());
 
 export const login: Handler = middy(Sentry.AWSLambda.wrapHandler(async (event: IEvent) => userController.loginController(event))).use(cors());
 
